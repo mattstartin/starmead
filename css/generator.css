@@ -1,0 +1,19 @@
+/* body { padding: 0; margin: 0}
+.header { height: 6vh; background-color: red; }
+.footer { height: 4vh; background-color:purple; }
+.container { width: 100vw; height:90vh; padding:0; margin: 0;}
+.quarter {
+    width: 30vw;
+    float: left; 
+}
+.three-quarter {
+    width: 70vw;
+    float: left; 
+} */
+.canvas {
+    margin-left: 2%;
+    width: 96%;
+    height: 70vh;
+    border: solid 1px black;
+    background-color: white;
+}

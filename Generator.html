@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<script type="text/javascript" src="./js/template.js"></script>
+<script type="text/javascript" src="./js/generator.js"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link type="text/css" rel="stylesheet" href="./css/materialize.min.css"  media="screen,projection"/>
+<link rel="stylesheet" href="./css/generator.css">
+
+<nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo">Logo</a>
+      <ul id="nav-mobile" class="right">
+        <li>Starmead Projects DXF Generator</li>
+      </ul>
+    </div>
+  </nav>
+
+<div class="row">
+    <div class="col s4">
+        <ul class="collection">
+            <li class="collection-item">
+                <h6>Size</h6>
+                <div class="row">
+                    <div class="col s6">
+                        <input type="number" id="faceWidth" value="2000">
+                        <label for="faceWidth">Face Width</label>
+                    </div>
+                    <div class="col s6">
+                        <input type="number" id="faceHeight" value="500">
+                        <label for="faceHeight">Face Height</label>
+                    </div>
+                    <div class="col s6">
+                        <input type="number" id="faceReturn" value="50">
+                        <label for="faceReturn">Return Depth</label>
+                    </div>
+                    <div class="col s6">
+                        <input type="number" id="thickness">
+                        <label for="thickness">Thickness</label>
+                    </div>
+                </div>
+            </li>
+            <li class="collection-item">
+                <div class="row">
+                    <div class="col s6">
+                        <input id="upstand" type="text" id="faceReturn" value="0" >
+                        <label for="faceReturn">Upstand</label>
+                    </div>
+                    <div class="col s6">
+                        <input type="text" id="thickness"  value="0" disabled>
+                        <label for="thickness">Downstand</label>
+                    </div>
+                </div>
+            </li>
+            <li class="collection-item">
+                <h6>Returns</h6>
+                <div class="row">
+                    <div class="col s3">
+                        <label>
+                            <input id="returnLeft" type="checkbox" class="filled-in" checked="checked" disabled />
+                            <span>Left</span>
+                        </label>
+                    </div>
+                    <div class="col s3">
+                        <label>
+                            <input id="returnRight" type="checkbox" class="filled-in" checked="checked" disabled/>
+                            <span>Right</span>
+                        </label>
+                    </div>
+                    <div class="col s3">
+                        <label>
+                            <input id="returnTop"  type="checkbox" class="filled-in" checked="checked" disabled />
+                            <span>Top</span>
+                        </label>
+                    </div>
+                    <div class="col s3">
+                        <label>
+                            <input id="returnBottom"  type="checkbox" class="filled-in" checked="checked" disabled/>
+                            <span>Bottom</span>
+                        </label>
+                    </div>
+                </div>
+            </li>
+        </ul>
+            
+
+            
+
+            <!-- Thickness:
+            <input type="text" id="Panel_Thickness"><p>
+        
+            <input type="checkbox" id="Upstand_Yes_No">
+            <label for="Upstand_Yes_No">Upstand</label>
+            <input type="number" id="Upstand" disabled>
+        
+            <input type="checkbox" id="Downstand_Yes_No">
+            <label for="Downstand_Yes_No">Downstand</label>
+            <input type="number" id="Downstand" disabled><p> -->
+
+        
+        <button class="waves-effect waves-light btn" onclick="calculate()"><i class="material-icons left">build</i>Calculate</button>
+        
+    </div>
+    <div class="col s8">
+        <div class="card-panel light-blue lighten-5">
+            <div class="card-content">
+                <canvas id="canvas" class="canvas"></canvas>
+                <button class="waves-effect waves-light btn" onclick="download()"><i class="material-icons left">cloud_download</i>Download</button>
+                <button class="waves-effect waves-light btn" onclick="clearCanvas()"><i class="material-icons left">autorenew</i>Clear</button>
+            </div>
+        </div>
+
+    </div>
+
+    
+</div>
+
+
+<!--JavaScript at end of body for optimized loading-->
+<script type="text/javascript" src="js/materialize.min.js"></script>
+    
+</body>
