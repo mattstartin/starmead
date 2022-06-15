@@ -70,6 +70,8 @@ function buildPolygonFromNet(netDetails) {
 
 function download() {
 
+    var jobNumber = document.getElementById("jobNumber").value;
+
     let netDetails = getNetDetails();
 
     let text = basicTemplate();
@@ -80,7 +82,7 @@ function download() {
             .replaceAll("${CUTOUT_TOP}",netDetails.cutoutTop)
             .replaceAll("${CUTOUT_SIDE}",netDetails.cutoutSide)
 
-    let fileName = netDetails.maxWidth + "x" + netDetails.maxHeight + "-" +netDetails.cutout + ".dxf"
+    let fileName = jobNumber + "_" + netDetails.maxWidth + "x" + netDetails.maxHeight + "-" +netDetails.cutout + ".dxf"
 
     let blob = new Blob([text], {type:'text/plain'});
 

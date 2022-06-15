@@ -64,7 +64,7 @@
                     </div>
                     <div class="col s3">
                         <label>
-                            <input id="returnRight" type="checkbox" class="filled-in" checked="checked" disabled/>
+                            <input id="returnRight" type="checkbox" class="filled-in" checked="checked" disabled />
                             <span>Right</span>
                         </label>
                     </div>
@@ -105,9 +105,23 @@
     <div class="col s8">
         <div class="card-panel light-blue lighten-5">
             <div class="card-content">
-                <canvas id="canvas" class="canvas"></canvas>
-                <button class="waves-effect waves-light btn" onclick="download()"><i class="material-icons left">cloud_download</i>Download</button>
-                <button class="waves-effect waves-light btn" onclick="clearCanvas()"><i class="material-icons left">autorenew</i>Clear</button>
+                <div class="row">
+                    <div class="col s6">
+                        <input id="jobNumber">
+                        <label for="jobNumber">Job Number</label>
+                    </div>
+                    <div class="col s3">
+                        <button class="waves-effect waves-light btn" onclick="download()"><i class="material-icons left">cloud_download</i>Download</button>
+                    </div>
+                    <div class="col s3">
+                        <button class="waves-effect waves-light btn" onclick="clearCanvas()"><i class="material-icons left">autorenew</i>Clear</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12">
+                        <canvas id="canvas" class="canvas"></canvas>
+                    </div>
+                </div>
             </div>
         </div>
 
