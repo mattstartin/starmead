@@ -71,10 +71,14 @@ function buildPolygonFromNet(netDetails) {
 function download() {
 
     var jobNumber = document.getElementById("jobNumber").value;
-
+    let returnRight = document.getElementById("returnRight").checked;
+    
     let netDetails = getNetDetails();
 
     let text = basicTemplate();
+    if(!returnRight) 
+        text = noRight();
+        
     text = text
             .replaceAll("${MAX_WIDTH}",netDetails.maxWidth)
             .replaceAll("${MAX_HEIGHT}",netDetails.maxHeight+netDetails.upstand)
