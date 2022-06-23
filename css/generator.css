@@ -10,6 +10,7 @@
     width: 70vw;
     float: left; 
 } */
+.logo { height: 60px; }
 .canvas {
     margin-left: 2%;
     width: 96%;
