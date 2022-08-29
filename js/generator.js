@@ -16,15 +16,12 @@ function calculate() {
     //     {x:50,y:0},
     //     {x:50,y:50},
     // ]
-
-    kfactor();
-
     let netDetails = getNetDetails();
-    console.log(netDetails)
     let poly = buildPolygonFromNet(netDetails)
     drawCanvas(poly);
     // document.getElementById("download").removeAttribute("disabled");
 
+    kfactor();
 
 }
 
@@ -83,12 +80,12 @@ function kfactor() {
 }
 
 function getNetDetails() {
-    let faceWidth = document.getElementById("totalWidth").innerHTML - 0;
-    let faceHeight = document.getElementById("totalHeight").innerHTML - 0;
-    let faceReturn = document.getElementById("totalCutout").innerHTML -0 ;
+    let faceWidth = document.getElementById("faceWidth").value - 0;
+    let faceHeight = document.getElementById("faceHeight").value - 0;
+    let faceReturn = document.getElementById("faceReturn").value -0 ;
     let upstand = document.getElementById("upstand").value -0;
     //TODO: IS MIN REQUIRED?
-    console.log()
+    
     return {
         minHeight: 0, maxHeight: faceHeight, 
         minWidth: 0, maxWidth: faceWidth,
