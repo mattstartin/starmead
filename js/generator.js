@@ -21,6 +21,62 @@ function calculate() {
     drawCanvas(poly);
     // document.getElementById("download").removeAttribute("disabled");
 
+    kfactor();
+
+}
+
+function kfactor() {
+    // Get Inputs
+    let kFactor = document.getElementById("kFactor").value - 0;
+    let kFactorThickness = document.getElementById("kFactorThickness").value - 0;
+    let innerRadius = document.getElementById("innerRadius").value -0 ;
+    let angle = document.getElementById("angle").value -0;
+    let faceWidth = document.getElementById("faceWidth").value - 0;
+    let faceHeight = document.getElementById("faceHeight").value - 0;
+    let faceReturn = document.getElementById("faceReturn").value -0 ;
+    
+    // Calculate
+    let returnRight = document.getElementById("returnRight").checked;
+    let returnLeft = document.getElementById("returnLeft").checked;
+    let horizontalReturnCount = [returnLeft,returnRight].filter(x=>x).length;
+    let returnTop = document.getElementById("returnTop").checked;
+    let returnBottom = document.getElementById("returnBottom").checked;
+    let verticalReturnCount = [returnTop,returnBottom].filter(x=>x).length;
+
+    let kFactorT = kFactor * kFactorThickness;
+    let bendMaterial = (angle * Math.PI / 360) * (2 * (innerRadius + kFactorT))
+    let widthInner = faceWidth - horizontalReturnCount * (innerRadius+kFactorThickness)
+    let heightInner = faceHeight - verticalReturnCount * (innerRadius+kFactorThickness)
+    let returnsInner = faceReturn - (innerRadius+kFactorThickness)
+
+
+
+    // Set Values and Show Table
+    document.getElementById("kfactorValues").hidden = false;
+    document.getElementById("kfactorT").innerHTML = kFactorT;
+    document.getElementById("bendMaterial").innerHTML = bendMaterial.toFixed(4);
+    document.getElementById("halfB").innerHTML = (bendMaterial/2).toFixed(4);
+    document.getElementById("widthInner").innerHTML = widthInner;
+    document.getElementById("heightInner").innerHTML = heightInner;
+    document.getElementById("totalWidth").innerHTML = Number(widthInner + (horizontalReturnCount * returnsInner) + (horizontalReturnCount * bendMaterial)).toFixed(4);
+    document.getElementById("totalHeight").innerHTML = Number(heightInner + (verticalReturnCount * returnsInner) + (verticalReturnCount * bendMaterial)).toFixed(4)
+    document.getElementById("totalCutout").innerHTML = (Number(returnsInner) + Number(bendMaterial) - Number(innerRadius)).toFixed(4);
+    
+    let horizontalFold = horizontalReturnCount > 0 ? Number(widthInner) + Number(bendMaterial.toFixed(4)) : ''
+    document.getElementById("widthFoldLine").innerHTML = horizontalFold;
+    
+    let verticalFold = verticalReturnCount > 0 ? Number(heightInner) + Number(bendMaterial.toFixed(4)) : ''
+    document.getElementById("heightFoldLine").innerHTML = verticalFold;
+    
+    if (Number(horizontalReturnCount) + Number(verticalReturnCount) > 0) {
+        document.getElementById("returnInner").innerHTML =  returnsInner;
+        document.getElementById("returnFoldLine").innerHTML = (Number(returnsInner) + Number(bendMaterial/2)).toFixed(4);
+        document.getElementById("totalCutout").innerHTML = (Number(returnsInner) + Number(bendMaterial) - Number(innerRadius)).toFixed(4);
+    } else {
+        document.getElementById("returnInner").innerHTML = '';
+        document.getElementById("returnFoldLine").innerHTML = '';
+        document.getElementById("totalCutout").innerHTML = '';
+    }
 }
 
 function getNetDetails() {

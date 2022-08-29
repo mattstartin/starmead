@@ -29,27 +29,24 @@
 </nav>
 
 <div class="row left">
-    <div class="col s4">
+    <div class="col s3">
         <ul class="collection">
             <li class="collection-item">
                 <h6>Size</h6>
                 <div class="row">
                     <div class="col s6">
-                        <input type="number" id="faceWidth" value="2000">
+                        <input type="number" id="faceWidth" value="2500">
                         <label for="faceWidth">Face Width</label>
                     </div>
                     <div class="col s6">
-                        <input type="number" id="faceHeight" value="500">
+                        <input type="number" id="faceHeight" value="1000">
                         <label for="faceHeight">Face Height</label>
                     </div>
                     <div class="col s6">
                         <input type="number" id="faceReturn" value="50">
                         <label for="faceReturn">Return Depth</label>
                     </div>
-                    <div class="col s6">
-                        <input type="number" id="thickness">
-                        <label for="thickness">Thickness</label>
-                    </div>
+                   
                 </div>
             </li>
             <li class="collection-item">
@@ -69,7 +66,7 @@
                 <div class="row">
                     <div class="col s3">
                         <label>
-                            <input id="returnLeft" type="checkbox" class="filled-in" checked="checked" disabled />
+                            <input id="returnLeft" type="checkbox" class="filled-in" checked="checked" />
                             <span>Left</span>
                         </label>
                     </div>
@@ -81,13 +78,13 @@
                     </div>
                     <div class="col s3">
                         <label>
-                            <input id="returnTop"  type="checkbox" class="filled-in" checked="checked" disabled />
+                            <input id="returnTop"  type="checkbox" class="filled-in" checked="checked" />
                             <span>Top</span>
                         </label>
                     </div>
                     <div class="col s3">
                         <label>
-                            <input id="returnBottom"  type="checkbox" class="filled-in" checked="checked" disabled/>
+                            <input id="returnBottom"  type="checkbox" class="filled-in" checked="checked" />
                             <span>Bottom</span>
                         </label>
                     </div>
@@ -113,7 +110,97 @@
         <button class="waves-effect waves-light btn" onclick="calculate()"><i class="material-icons left">build</i>Calculate</button>
         
     </div>
-    <div class="col s8">
+    <div class="col s3">
+        <ul class="collection">
+            <li class="collection-item">
+                <h6>K Factor</h6>
+                <div class="row">
+                    <div class="col s6">
+                        <input type="number" id="kFactor" value="0.45">
+                        <label for="kFactor">K Factor</label>
+                    </div>
+                    <div class="col s6">
+                        <input type="number" id="kFactorThickness" value="2">
+                        <label for="kFactorThickness">Material Thickness</label>
+                    </div>
+                    <div class="col s6">
+                        <input type="number" id="innerRadius" value="1">
+                        <label for="innerRadius">Inner Radius</label>
+                    </div>
+                    <div class="col s6">
+                        <input type="number" id="angle" value="90">
+                        <label for="angle">Angle</label>
+                    </div>
+                </div>
+            </li>
+            <li class="collection-item" id="kfactorValues">
+                <table  class="striped">
+                    <tbody>
+                      <tr>
+                        <td>t</td>
+                        <td><div id="kfactorT"></div></td>
+                      </tr>
+                      <tr>
+                        <td>Material for Bend</td>
+                        <td><div id="bendMaterial"></div></td>
+                      </tr>
+                      <tr>
+                        <td>Half b</td>
+                        <td><div id="halfB"></div></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <hr />
+                  <table  class="striped">
+                      <thead>
+                          <tr>
+                              <td></td>
+                              <td>Inner</td>
+                              <td>Fold Lines</td>
+                          </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Width</td>
+                          <td><div id="widthInner"></div></td>
+                          <td><div id="widthFoldLine"></div></td>
+                        </tr>
+                        <tr>
+                          <td>Height</td>
+                          <td><div id="heightInner"></div></td>
+                          <td><div id="heightFoldLine"></div></td>
+                        </tr>
+                        <tr>
+                          <td>Returns</td>
+                          <td><div id="returnInner"></div></td>
+                          <td><div id="returnFoldLine"></div></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <hr />
+                    <h6>Totals</h6>
+                    <table  class="striped">
+                        <tbody>
+                          <tr>
+                            <td>Width</td>
+                            <td><div id="totalWidth"></div></td>
+                          </tr>
+                          <tr>
+                            <td>Height</td>
+                            <td><div id="totalHeight"></div></td>
+                          </tr>
+                          <tr>
+                            <td>Cutout</td>
+                            <td><div id="totalCutout"></div></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                        
+            </li>
+        </ul>
+        
+    </div>
+    <div class="col s6">
         <div class="card-panel light-blue lighten-5">
             <div class="card-content">
                 <div class="row">
