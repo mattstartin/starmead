@@ -194,11 +194,20 @@ function drawCanvas(poly) {
         // Draw Net
     var ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, width, height);
+    ctx.scale(1,1);
     ctx.beginPath();
-    ctx.moveTo(poly[0].x/10+50, poly[0].y/10+50);
+    // ctx.scale(0.5,0.5)
+
+    //optimal size is 2500x1000, so scale in relation to that
+    let faceWidth = document.getElementById("totalWidth").innerHTML - 0;
+    let faceHeight = document.getElementById("totalHeight").innerHTML - 0;
+    
+    ctx.scale(Number(faceWidth)/2500, Number(faceWidth)/2500)
+
+    ctx.moveTo(poly[0].x/10+20, poly[0].y/10+20);
     
     for(i=1; i < poly.length; i++) {
-        ctx.lineTo(poly[i].x/10+50, poly[i].y/10+50)
+        ctx.lineTo(poly[i].x/10+20, poly[i].y/10+20)
     }
     ctx.closePath();
 
