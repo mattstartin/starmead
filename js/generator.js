@@ -22,6 +22,7 @@ function calculate() {
     let netDetails = getNetDetails();
     console.log(netDetails)
     let poly = buildPolygonFromNet(netDetails)
+    console.log(poly)
     drawCanvas(poly);
     // document.getElementById("download").removeAttribute("disabled");
 
@@ -115,14 +116,34 @@ function buildPolygonFromNet(netDetails) {
     ]
 
     let returnRight = document.getElementById("returnRight").checked;
+    let returnBottom = document.getElementById("returnBottom").checked;
+    let returnLeft = document.getElementById("returnLeft").checked;
+    let returnTop = document.getElementById("returnTop").checked;
     // If no right return, invert right corners
     if (!returnRight) {
-        var removeValFrom = [5,6,7,8];
+        var removeValFrom = [6,7];
         poly = poly.filter(function(value, index) {
              return removeValFrom.indexOf(index) == -1;
         })
     }
-
+    if (!returnBottom) {
+        var removeValFrom = [9,10];
+        poly = poly.filter(function(value, index) {
+             return removeValFrom.indexOf(index) == -1;
+        })
+    }
+    if (!returnLeft) {
+        var removeValFrom = [0,1];
+        poly = poly.filter(function(value, index) {
+             return removeValFrom.indexOf(index) == -1;
+        })
+    }
+    if (!returnTop) {
+        var removeValFrom = [3,4];
+        poly = poly.filter(function(value, index) {
+             return removeValFrom.indexOf(index) == -1;
+        })
+    }
 
     return poly;
 }
@@ -131,7 +152,10 @@ function download() {
 
     var jobNumber = document.getElementById("jobNumber").value;
     let returnRight = document.getElementById("returnRight").checked;
-    
+    let returnLeft = document.getElementById("returnLeft").checked;
+    let returnTop = document.getElementById("returnTop").checked;
+    let returnBottom = document.getElementById("returnBottom").checked;
+
 
     let faceWidth = document.getElementById("faceWidth").value - 0;
     let faceHeight = document.getElementById("faceHeight").value - 0;
@@ -149,10 +173,22 @@ function download() {
             .replaceAll("${CUTOUT}",netDetails.cutout)
             .replaceAll("${CUTOUT_TOP}",netDetails.cutoutTop)
             .replaceAll("${CUTOUT_SIDE}",netDetails.cutoutSide)
+console.log(text)
+
+
+// Can I do this dynamically?
+    let attemptTwo = fileStart();
+    let poly = buildPolygonFromNet(netDetails)
+    poly.forEach(corner => attemptTwo+=addVertex(corner.x, corner.y))
+    attemptTwo+=fileEnd()
+    attemptTwo = attemptTwo
+        .replaceAll("${MAX_WIDTH}",netDetails.maxWidth)
+        .replaceAll("${MAX_HEIGHT}",netDetails.maxHeight+netDetails.upstand)
+console.log(attemptTwo)
 
     let fileName = jobNumber + "_" + faceWidth + "x" + faceHeight + "-" +faceReturn + ".dxf"
 
-    let blob = new Blob([text], {type:'text/plain'});
+    let blob = new Blob([attemptTwo], {type:'text/plain'});
 
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -194,9 +230,9 @@ function drawCanvas(poly) {
         //     ctx.moveTo(0,0)
         // })
         
-        var polygon = document.getElementById("polygon")
+        // var polygon = document.getElementById("polygon")
   
-        document.getElementById("drawingSection").innerHTML += "<svg width=\"300\" height=\"200\"><pologon points\"10,10 200,200 37,64\" style=\"fill:lime;stroke:purple\"/></svg>";
+        // document.getElementById("drawingSection").innerHTML += "<svg width=\"300\" height=\"200\"><pologon points\"10,10 200,200 37,64\" style=\"fill:lime;stroke:purple\"/></svg>";
 
         // Draw Net
     var ctx = canvas.getContext('2d');

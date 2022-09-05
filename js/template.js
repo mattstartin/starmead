@@ -305,3 +305,65 @@ function noRight() {
     "EOF" + "\n" +
     "" + "\n" 
 }
+
+function fileStart() {
+    return "0" + "\n" +
+    "SECTION" + "\n" +
+    "2" + "\n" +
+    "HEADER" + "\n" +
+    "9" + "\n" +
+    "$EXTMIN" + "\n" +
+    "10" + "\n" +
+    "0.000000" + "\n" +
+    "20" + "\n" +
+    "0.000000" + "\n" +
+    "9" + "\n" +
+    "$EXTMAX" + "\n" +
+    "10" + "\n" +
+    "${MAX_WIDTH}" + "\n" +
+    "20" + "\n" +
+    "${MAX_HEIGHT}" + "\n" +
+    "0" + "\n" +
+    "ENDSEC" + "\n" +
+    "0" + "\n" +
+    "SECTION" + "\n" +
+    "2" + "\n" +
+    "TABLES" + "\n" +
+    "0" + "\n" +
+    "ENDSEC" + "\n" +
+    "0" + "\n" +
+    "SECTION" + "\n" +
+    "2" + "\n" +
+    "ENTITIES" + "\n" +
+    "0" + "\n" +
+    "POLYLINE" + "\n" +
+    "8" + "\n" +
+    "0" + "\n" +
+    "66" + "\n" +
+    "1" + "\n" +
+    "70" + "\n" +
+    "1" + "\n" +
+    "0" + "\n" 
+}
+
+function addVertex(x,y) {
+    return "VERTEX" + "\n" +
+    "8" + "\n" +
+    "2" + "\n" +
+    "10" + "\n" +
+    x + "\n" +
+    "20" + "\n" +
+    y + "\n" +
+    "0" + "\n" 
+}
+
+function fileEnd() {
+    return "SEQEND" + "\n" +
+    "0" + "\n" +
+    "ENDSEC" + "\n" +
+    "0" + "\n" +
+    "EOF" + "\n" +
+    "" + "\n" 
+}
+
+
