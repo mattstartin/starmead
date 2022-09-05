@@ -132,6 +132,11 @@ function download() {
     var jobNumber = document.getElementById("jobNumber").value;
     let returnRight = document.getElementById("returnRight").checked;
     
+
+    let faceWidth = document.getElementById("faceWidth").value - 0;
+    let faceHeight = document.getElementById("faceHeight").value - 0;
+    let faceReturn = document.getElementById("faceReturn").value - 0;
+
     let netDetails = getNetDetails();
 
     let text = basicTemplate();
@@ -145,7 +150,7 @@ function download() {
             .replaceAll("${CUTOUT_TOP}",netDetails.cutoutTop)
             .replaceAll("${CUTOUT_SIDE}",netDetails.cutoutSide)
 
-    let fileName = jobNumber + "_" + netDetails.maxWidth + "x" + netDetails.maxHeight + "-" +netDetails.cutout + ".dxf"
+    let fileName = jobNumber + "_" + faceWidth + "x" + faceHeight + "-" +faceReturn + ".dxf"
 
     let blob = new Blob([text], {type:'text/plain'});
 
@@ -189,8 +194,10 @@ function drawCanvas(poly) {
         //     ctx.moveTo(0,0)
         // })
         
-        
-        
+        var polygon = document.getElementById("polygon")
+  
+        document.getElementById("drawingSection").innerHTML += "<svg width=\"300\" height=\"200\"><pologon points\"10,10 200,200 37,64\" style=\"fill:lime;stroke:purple\"/></svg>";
+
         // Draw Net
     var ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, width, height);
@@ -213,6 +220,9 @@ function drawCanvas(poly) {
 
 
     ctx.fill();
+
+
+    
     // ctx.fillStyle = '#f00';
     
     
