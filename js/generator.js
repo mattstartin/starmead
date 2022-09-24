@@ -1,32 +1,9 @@
 
 function calculate() {
-
-    //THIS IS AN EXAMPLE FOR 2000x500
-    // let poly = [
-    //     {x:0,y:50},
-    //     {x:0,y:450},
-    //     {x:50,y:450},
-    //     {x:50,y:500},
-    //     {x:1950,y:500},
-    //     {x:1950,y:450},
-    //     {x:2000,y:450},
-    //     {x:2000,y:50},
-    //     {x:1950,y:50},
-    //     {x:1950,y:0},
-    //     {x:50,y:0},
-    //     {x:50,y:50},
-    // ]
-
     kfactor();
-
-    let netDetails = getNetDetails();
-    console.log(netDetails)
-    let poly = buildPolygonFromNet(netDetails)
-    console.log(poly)
+    calculateHoles();
+    let poly = buildPolygonFromNet()
     drawCanvas(poly);
-    // document.getElementById("download").removeAttribute("disabled");
-
-
 }
 
 function kfactor() {
@@ -53,52 +30,58 @@ function kfactor() {
     let heightInner = faceHeight - verticalReturnCount * (innerRadius+kFactorThickness)
     let returnsInner = faceReturn - (innerRadius+kFactorThickness)
 
-
-
     // Set Values and Show Table
-    document.getElementById("kfactorValues").hidden = false;
-    document.getElementById("kfactorT").innerHTML = kFactorT;
-    document.getElementById("bendMaterial").innerHTML = bendMaterial.toFixed(4);
-    document.getElementById("halfB").innerHTML = (bendMaterial/2).toFixed(4);
-    document.getElementById("widthInner").innerHTML = widthInner;
-    document.getElementById("heightInner").innerHTML = heightInner;
+    // document.getElementById("kfactorValues").hidden = false;
+    // document.getElementById("kfactorT").innerHTML = kFactorT;
+    // document.getElementById("bendMaterial").innerHTML = bendMaterial.toFixed(4);
+    // document.getElementById("halfB").innerHTML = (bendMaterial/2).toFixed(4);
+    // document.getElementById("widthInner").innerHTML = widthInner;
+    // document.getElementById("heightInner").innerHTML = heightInner;
     document.getElementById("totalWidth").innerHTML = Number(widthInner + (horizontalReturnCount * returnsInner) + (horizontalReturnCount * bendMaterial)).toFixed(4);
     document.getElementById("totalHeight").innerHTML = Number(heightInner + (verticalReturnCount * returnsInner) + (verticalReturnCount * bendMaterial)).toFixed(4)
     document.getElementById("totalCutout").innerHTML = (Number(returnsInner) + Number(bendMaterial) - Number(innerRadius)).toFixed(4);
     
     let horizontalFold = horizontalReturnCount > 0 ? Number(widthInner) + Number(bendMaterial.toFixed(4)) : ''
-    document.getElementById("widthFoldLine").innerHTML = horizontalFold;
+    // document.getElementById("widthFoldLine").innerHTML = horizontalFold;
     
     let verticalFold = verticalReturnCount > 0 ? Number(heightInner) + Number(bendMaterial.toFixed(4)) : ''
-    document.getElementById("heightFoldLine").innerHTML = verticalFold;
+    // document.getElementById("heightFoldLine").innerHTML = verticalFold;
     
-    if (Number(horizontalReturnCount) + Number(verticalReturnCount) > 0) {
-        document.getElementById("returnInner").innerHTML =  returnsInner;
-        document.getElementById("returnFoldLine").innerHTML = (Number(returnsInner) + Number(bendMaterial/2)).toFixed(4);
-        document.getElementById("totalCutout").innerHTML = (Number(returnsInner) + Number(bendMaterial) - Number(innerRadius)).toFixed(4);
-    } else {
-        document.getElementById("returnInner").innerHTML = '';
-        document.getElementById("returnFoldLine").innerHTML = '';
-        document.getElementById("totalCutout").innerHTML = '';
-    }
+    // if (Number(horizontalReturnCount) + Number(verticalReturnCount) > 0) {
+    //     document.getElementById("returnInner").innerHTML =  returnsInner;
+    //     document.getElementById("returnFoldLine").innerHTML = (Number(returnsInner) + Number(bendMaterial/2)).toFixed(4);
+    //     document.getElementById("totalCutout").innerHTML = (Number(returnsInner) + Number(bendMaterial) - Number(innerRadius)).toFixed(4);
+    // } else {
+    //     document.getElementById("returnInner").innerHTML = '';
+    //     document.getElementById("returnFoldLine").innerHTML = '';
+    //     document.getElementById("totalCutout").innerHTML = '';
+    // }
 }
 
-function getNetDetails() {
-    let faceWidth = document.getElementById("totalWidth").innerHTML - 0;
-    let faceHeight = document.getElementById("totalHeight").innerHTML - 0;
-    let faceReturn = document.getElementById("totalCutout").innerHTML -0 ;
-    let upstand = document.getElementById("upstand").value -0;
-    //TODO: IS MIN REQUIRED?
-    console.log()
-    return {
-        minHeight: 0, maxHeight: faceHeight, 
-        minWidth: 0, maxWidth: faceWidth,
-        cutout: faceReturn, cutoutTop: faceHeight-faceReturn, cutoutSide: faceWidth-faceReturn,
-        upstand: upstand 
-    }
+function calculateHoles() {
+   let totalWidth = document.getElementById("totalWidth").innerHTML
+   let faceWidth = document.getElementById("faceWidth").value;
+  
+   // Get Inputs
+   let endOffset = document.getElementById("endOffset").value - 0;
+   let approxPitch = document.getElementById("approxPitch").value - 0;
+   
+   //Calculate
+   let distanceToFill = faceWidth - 2*endOffset;
+   let pitch = Math.round(distanceToFill/approxPitch);
+   let totalHoles = pitch+1;
+   let actualPitch = distanceToFill / pitch;
+
+   document.getElementById("distanceToFill").innerHTML = Number(distanceToFill).toFixed(4);
+   document.getElementById("totalHoles").innerHTML = Number(totalHoles).toFixed(4);
+   document.getElementById("actualPitch").innerHTML = Number(actualPitch).toFixed(4);
+
+
 }
 
-function buildPolygonFromNet(netDetails) {
+function buildPolygonFromNet() {
+
+    let netDetails = getNetDetails();
     //polygon drawing goes left/down, so this is all upsidedown
     let poly = [
         {x:netDetails.minWidth,y:netDetails.cutout},
@@ -148,48 +131,43 @@ function buildPolygonFromNet(netDetails) {
     return poly;
 }
 
+
+function getNetDetails() {
+    let faceWidth = document.getElementById("totalWidth").innerHTML - 0;
+    let faceHeight = document.getElementById("totalHeight").innerHTML - 0;
+    let faceReturn = document.getElementById("totalCutout").innerHTML -0 ;
+    let upstand = document.getElementById("upstand").value -0;
+    return {
+        minHeight: 0, maxHeight: faceHeight, 
+        minWidth: 0, maxWidth: faceWidth,
+        cutout: faceReturn, cutoutTop: faceHeight-faceReturn, cutoutSide: faceWidth-faceReturn,
+        upstand: upstand 
+    }
+}
+
+
 function download() {
 
+    // Generate File Name
     var jobNumber = document.getElementById("jobNumber").value;
-    let returnRight = document.getElementById("returnRight").checked;
-    let returnLeft = document.getElementById("returnLeft").checked;
-    let returnTop = document.getElementById("returnTop").checked;
-    let returnBottom = document.getElementById("returnBottom").checked;
-
-
     let faceWidth = document.getElementById("faceWidth").value - 0;
     let faceHeight = document.getElementById("faceHeight").value - 0;
     let faceReturn = document.getElementById("faceReturn").value - 0;
+    let fileName = jobNumber + "_" + faceWidth + "x" + faceHeight + "-" +faceReturn + ".dxf"
 
+    // Build DXF File
     let netDetails = getNetDetails();
-
-    let text = basicTemplate();
-    if(!returnRight) 
-        text = noRight();
-        
-    text = text
-            .replaceAll("${MAX_WIDTH}",netDetails.maxWidth)
-            .replaceAll("${MAX_HEIGHT}",netDetails.maxHeight+netDetails.upstand)
-            .replaceAll("${CUTOUT}",netDetails.cutout)
-            .replaceAll("${CUTOUT_TOP}",netDetails.cutoutTop)
-            .replaceAll("${CUTOUT_SIDE}",netDetails.cutoutSide)
-console.log(text)
-
-
-// Can I do this dynamically?
     let attemptTwo = fileStart();
     let poly = buildPolygonFromNet(netDetails)
     poly.forEach(corner => attemptTwo+=addVertex(corner.x, corner.y))
-    attemptTwo+=fileEnd()
+    attemptTwo += fileEnd()
     attemptTwo = attemptTwo
         .replaceAll("${MAX_WIDTH}",netDetails.maxWidth)
         .replaceAll("${MAX_HEIGHT}",netDetails.maxHeight+netDetails.upstand)
-console.log(attemptTwo)
 
-    let fileName = jobNumber + "_" + faceWidth + "x" + faceHeight + "-" +faceReturn + ".dxf"
 
+    // Download file from generated file
     let blob = new Blob([attemptTwo], {type:'text/plain'});
-
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.style.display = 'none';
@@ -216,36 +194,18 @@ function drawCanvas(poly) {
     var canvas = document.getElementById("canvas")
     const { width, height } = canvas.getBoundingClientRect();
     
-    // Draw some grey verticals at 2%, 12%, 88% and 98% width
-    // let verticalLines = [width*0.02, width*0.12, width*0.48, width*0.58]
-    
-    // verticalLines.forEach(line => {
-        //     console.log(line)
-        //     ctx.setLineDash([1, 1]);
-        //     ctx.beginPath();
-        //     ctx.moveTo(line,0);
-        //     ctx.lineTo(line, height);
-        //     ctx.stroke();
-        //     ctx.closePath();
-        //     ctx.moveTo(0,0)
-        // })
-        
-        // var polygon = document.getElementById("polygon")
-  
-        // document.getElementById("drawingSection").innerHTML += "<svg width=\"300\" height=\"200\"><pologon points\"10,10 200,200 37,64\" style=\"fill:lime;stroke:purple\"/></svg>";
-
         // Draw Net
     var ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, width, height);
-    ctx.scale(1,1);
-    ctx.beginPath();
+    // ctx.scale(1,1);
     // ctx.scale(0.5,0.5)
-
+    
     //optimal size is 2500x1000, so scale in relation to that
     let faceWidth = document.getElementById("totalWidth").innerHTML - 0;
     let faceHeight = document.getElementById("totalHeight").innerHTML - 0;
     
-    ctx.scale(Number(faceWidth)/2500, Number(faceWidth)/2500)
+    ctx.scale(Number(faceWidth)/2500, Number(faceHeight)/1000)
+    ctx.beginPath();
 
     ctx.moveTo(poly[0].x/10+20, poly[0].y/10+20);
     

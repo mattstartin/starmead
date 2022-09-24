@@ -35,7 +35,7 @@
                 <h6>Size</h6>
                 <div class="row">
                     <div class="col s6">
-                        <input type="number" id="faceWidth" value="2500">
+                        <input type="number" id="faceWidth" value="2250">
                         <label for="faceWidth">Face Width</label>
                     </div>
                     <div class="col s6">
@@ -134,7 +134,7 @@
                 </div>
             </li>
             <li class="collection-item" id="kfactorValues">
-                <table  class="striped">
+                <!-- <table  class="striped">
                     <tbody>
                       <tr>
                         <td>t</td>
@@ -149,8 +149,8 @@
                         <td><div id="halfB"></div></td>
                       </tr>
                     </tbody>
-                  </table>
-                  <hr />
+                  </table> -->
+                  <!-- <hr />
                   <table  class="striped">
                       <thead>
                           <tr>
@@ -176,8 +176,8 @@
                           <td><div id="returnFoldLine"></div></td>
                         </tr>
                       </tbody>
-                    </table>
-                    <hr />
+                    </table> 
+                    <hr />-->
                     <h6>Totals</h6>
                     <table  class="striped">
                         <tbody>
@@ -200,25 +200,64 @@
         </ul>
         
     </div>
-    <div class="col s6">
+    <div class="col s3">
+        <ul class="collection">
+            <li class="collection-item">
+                <h6>Holes</h6>
+                <div class="row">
+                    <div class="col s6">
+                        <input type="number" id="endOffset" value="50">
+                        <label for="endOffset">End Offset</label>
+                    </div>
+                    <div class="col s6">
+                        <input type="number" id="approxPitch" value="600">
+                        <label for="approxPitch">Approx Pitch</label>
+                    </div>
+                </div>
+            </li>
+            <li class="collection-item" id="kfactorValues">
+                
+                    <h6>Totals</h6>
+                    <table  class="striped">
+                        <tbody>
+                          <tr>
+                            <td>Distance To Fill</td>
+                            <td><div id="distanceToFill"></div></td>
+                          </tr>
+                          <tr>
+                            <td>Total Holes</td>
+                            <td><div id="totalHoles"></div></td>
+                          </tr>
+                          <tr>
+                            <td>Pitch</td>
+                            <td><div id="actualPitch"></div></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                        
+            </li>
+        </ul>
+        
+    </div>
+    <div class="col s3">
         <div class="card-panel light-blue lighten-5">
             <div class="card-content">
                 <div class="row">
-                    <div class="col s6">
+                    <div class="col s12">
                         <input id="jobNumber">
                         <label for="jobNumber">Job Number</label>
                     </div>
-                    <div class="col s3">
+                    <div class="col s6">
                         <button class="waves-effect waves-light btn" onclick="download()"><i class="material-icons left">cloud_download</i>Download</button>
                     </div>
-                    <div class="col s3">
+                    <div class="col s6">
                         <button class="waves-effect waves-light btn" onclick="clearCanvas()"><i class="material-icons left">autorenew</i>Clear</button>
                     </div>
                 </div>
                 <div class="row">
                     <div id="drawingSection" class="col s12">
-                        <canvas  id="canvas" class="canvas"></canvas>
-                        <!-- <svg width="300" height="200">
+                         <!--<canvas  id="canvas" class="canvas"></canvas>
+                        <svg width="300" height="200">
                             <polygon id="polygon" points="0,0 300,0 200,200 0,200"
                             style="fill:lime;stroke:purple;fill-rule:evenodd;" />
                           </svg> -->
