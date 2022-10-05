@@ -12,7 +12,7 @@ function kfactor() {
     let kFactorThickness = document.getElementById("kFactorThickness").value - 0;
     let innerRadius = document.getElementById("innerRadius").value -0 ;
     let angle = document.getElementById("angle").value -0;
-    let faceWidth = document.getElementById("faceWidth").value - 0;
+    let faceWidth = doSums(document.getElementById("faceWidth").value);
     let faceHeight = document.getElementById("faceHeight").value - 0;
     let faceReturn = document.getElementById("faceReturn").value -0 ;
     
@@ -60,7 +60,7 @@ function kfactor() {
 
 function calculateHoles() {
    let totalWidth = document.getElementById("totalWidth").innerHTML
-   let faceWidth = document.getElementById("faceWidth").value;
+   let faceWidth = doSums(document.getElementById("faceWidth").value);
   
    // Get Inputs
    let endOffset = document.getElementById("endOffset").value - 0;
@@ -151,7 +151,7 @@ function download() {
 
     // Generate File Name
     var jobNumber = document.getElementById("jobNumber").value;
-    let faceWidth = document.getElementById("faceWidth").value - 0;
+    let faceWidth = doSums(document.getElementById("faceWidth").value);
     let faceHeight = document.getElementById("faceHeight").value - 0;
     let faceReturn = document.getElementById("faceReturn").value - 0;
     let fileName = jobNumber + "_" + faceWidth + "x" + faceHeight + "-" +faceReturn + ".dxf"
