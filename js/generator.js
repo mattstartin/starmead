@@ -68,7 +68,8 @@ function calculateHoles() {
    
    //Calculate
    let distanceToFill = faceWidth - 2*endOffset;
-   let pitch = Math.round(distanceToFill/approxPitch);
+   let guessedPitch = distanceToFill/approxPitch;
+   let pitch = guessedPitch < 0.5 ? 1 : Math.round(distanceToFill/approxPitch);
    let totalHoles = pitch+1;
    let actualPitch = distanceToFill / pitch;
 
