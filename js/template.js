@@ -335,8 +335,11 @@ function fileStart() {
     "SECTION" + "\n" +
     "2" + "\n" +
     "ENTITIES" + "\n" +
-    "0" + "\n" +
-    "POLYLINE" + "\n" +
+    "0" + "\n";
+}
+
+function addPolyLine() {
+    return "POLYLINE" + "\n" +
     "8" + "\n" +
     "0" + "\n" +
     "66" + "\n" +
@@ -357,12 +360,35 @@ function addVertex(x,y) {
     "0" + "\n" 
 }
 
-function fileEnd() {
+function addHole(x,y) {
+    return "CIRCLE" + "\n" +
+    "5" + "\n" +
+    "6F" + "\n" +
+    "100" + "\n" +
+    "AcDbEntity" + "\n" +
+    "8" + "\n" +
+    "0" + "\n" +
+    "100" + "\n" +
+    "AcDbCircle" + "\n" +
+    "10" + "\n" +
+    "98.9845" + "\n" +
+    "20" + "\n" +
+    "776" + "\n" +
+    "30" + "\n" +
+    "0" + "\n" +
+    "40" + "\n" +
+    "2" + "\n" +
+    "0" + "\n";
+}
+
+function sectionEnd() {
     return "SEQEND" + "\n" +
     "0" + "\n" +
     "ENDSEC" + "\n" +
-    "0" + "\n" +
-    "EOF" + "\n" +
+    "0" + "\n";
+}
+function fileEnd() {
+   return "EOF" + "\n" +
     "" + "\n" 
 }
 

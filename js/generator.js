@@ -159,8 +159,11 @@ function download() {
     // Build DXF File
     let netDetails = getNetDetails();
     let attemptTwo = fileStart();
+    attemptTwo += addHole(97, 776);
+    attemptTwo += addPolyLine();
     let poly = buildPolygonFromNet(netDetails)
     poly.forEach(corner => attemptTwo+=addVertex(corner.x, corner.y))
+    attemptTwo += sectionEnd();
     attemptTwo += fileEnd()
     attemptTwo = attemptTwo
         .replaceAll("${MAX_WIDTH}",netDetails.maxWidth)
