@@ -1,12 +1,17 @@
 
-panelBlank = {
-    height: 0,
-    width: 0,
-    return:0, 
-    holes: []
+panelBlank = resetPanel();
+
+function resetPanel() {
+    return {
+        height: 0,
+        width: 0,
+        return:0, 
+        holes: []
+    } 
 }
 
 function calculate() {
+    panelBlank = resetPanel();
     kfactor();
     calculateHoles();
     let poly = buildPolygonFromNet()
