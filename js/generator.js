@@ -1,4 +1,11 @@
 
+panelBlank = {
+    height: 0,
+    width: 0,
+    return:0, 
+    holes: []
+}
+
 function calculate() {
     kfactor();
     calculateHoles();
@@ -14,7 +21,8 @@ function kfactor() {
     let angle = document.getElementById("angle").value -0;
     let faceWidth = doSums(document.getElementById("faceWidth").value);
     let faceHeight = document.getElementById("faceHeight").value - 0;
-    let faceReturn = document.getElementById("faceReturn").value -0 ;
+    panelBlank.return = document.getElementById("faceReturn").value -0 ;
+    let faceReturn = panelBlank.return;
     
     // Calculate
     let returnRight = document.getElementById("returnRight").checked;
@@ -37,8 +45,10 @@ function kfactor() {
     // document.getElementById("halfB").innerHTML = (bendMaterial/2).toFixed(4);
     // document.getElementById("widthInner").innerHTML = widthInner;
     // document.getElementById("heightInner").innerHTML = heightInner;
-    document.getElementById("totalWidth").innerHTML = Number(widthInner + (horizontalReturnCount * returnsInner) + (horizontalReturnCount * bendMaterial)).toFixed(4);
-    document.getElementById("totalHeight").innerHTML = Number(heightInner + (verticalReturnCount * returnsInner) + (verticalReturnCount * bendMaterial)).toFixed(4)
+    panelBlank.width = Number(widthInner + (horizontalReturnCount * returnsInner) + (horizontalReturnCount * bendMaterial)).toFixed(4);
+    panelBlank.height = Number(heightInner + (verticalReturnCount * returnsInner) + (verticalReturnCount * bendMaterial)).toFixed(4)
+    document.getElementById("totalWidth").innerHTML = this.panelBlank.width
+    document.getElementById("totalHeight").innerHTML = this.panelBlank.height;
     document.getElementById("totalCutout").innerHTML = (Number(returnsInner) + Number(bendMaterial) - Number(innerRadius)).toFixed(4);
     
     let horizontalFold = horizontalReturnCount > 0 ? Number(widthInner) + Number(bendMaterial.toFixed(4)) : ''
@@ -77,7 +87,10 @@ function calculateHoles() {
    document.getElementById("totalHoles").innerHTML = Number(totalHoles).toFixed(4);
    document.getElementById("actualPitch").innerHTML = Number(actualPitch).toFixed(4);
 
-
+   for (let i=0;i<totalHoles;i++) {
+       let hole = { x: Number(i*actualPitch+endOffset), y: Number(panelBlank.height - Number(15))}
+       panelBlank.holes.push(hole)
+   }
 }
 
 function buildPolygonFromNet() {
@@ -159,7 +172,8 @@ function download() {
     // Build DXF File
     let netDetails = getNetDetails();
     let attemptTwo = fileStart();
-    attemptTwo += addHole(97, 776);
+    console.log(panelBlank.holes)
+    panelBlank.holes.forEach(hole => attemptTwo+=addHole(hole.x+panelBlank.return, hole.y));
     attemptTwo += addPolyLine();
     let poly = buildPolygonFromNet(netDetails)
     poly.forEach(corner => attemptTwo+=addVertex(corner.x, corner.y))
