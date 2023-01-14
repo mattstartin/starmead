@@ -12,95 +12,88 @@ function resetPanel() {
 
 function calculate() {
     panelBlank = resetPanel();
-    kfactor();
-    calculateHoles();
-    let poly = buildPolygonFromNet()
-    drawCanvas(poly);
+    let inputs = getInputs();
+    kfactor(inputs);
+    calculateHoles(inputs);
+    let poly = buildPolygonFromNet(inputs)
+    // drawCanvas(poly);
 }
 
-function kfactor() {
-    // Get Inputs
-    let kFactor = document.getElementById("kFactor").value - 0;
-    let kFactorThickness = document.getElementById("kFactorThickness").value - 0;
-    let innerRadius = document.getElementById("innerRadius").value -0 ;
-    let angle = document.getElementById("angle").value -0;
-    let faceWidth = doSums(document.getElementById("faceWidth").value);
-    let faceHeight = document.getElementById("faceHeight").value - 0;
-    panelBlank.return = document.getElementById("faceReturn").value -0 ;
-    let faceReturn = panelBlank.return;
+function getInputs() {
+    return {
+        kFactor: getNumberElement("kFactor"),
+        kFactorThickness: getNumberElement("kFactorThickness"),
+        innerRadius: getNumberElement("innerRadius"),
+        angle: getNumberElement("angle"),
+        faceWidth: doSums(document.getElementById("faceWidth").value),
+        faceHeight: getNumberElement("faceHeight"),
+        returnRight: document.getElementById("returnRight").checked,
+        returnLeft: document.getElementById("returnLeft").checked,
+        returnTop: document.getElementById("returnTop").checked,
+        returnBottom: document.getElementById("returnBottom").checked,
+        return: getNumberElement("faceReturn"),
+        endOffset: getNumberElement("endOffset"),
+        approxPitch: getNumberElement("approxPitch"),
+        jobNumber: document.getElementById("jobNumber").value,
+    }
+}
+
+function getNumberElement(id) {
+    return document.getElementById(id).value - 0;
+}
+function setElementValue(id,value) {
+    document.getElementById(id).innerHTML = value;
+}
+
+function kfactor(inputs) {
     
     // Calculate
-    let returnRight = document.getElementById("returnRight").checked;
-    let returnLeft = document.getElementById("returnLeft").checked;
     let horizontalReturnCount = [returnLeft,returnRight].filter(x=>x).length;
-    let returnTop = document.getElementById("returnTop").checked;
-    let returnBottom = document.getElementById("returnBottom").checked;
     let verticalReturnCount = [returnTop,returnBottom].filter(x=>x).length;
-
-    let kFactorT = kFactor * kFactorThickness;
-    let bendMaterial = (angle * Math.PI / 360) * (2 * (innerRadius + kFactorT))
-    let widthInner = faceWidth - horizontalReturnCount * (innerRadius+kFactorThickness)
-    let heightInner = faceHeight - verticalReturnCount * (innerRadius+kFactorThickness)
-    let returnsInner = faceReturn - (innerRadius+kFactorThickness)
-
-    // Set Values and Show Table
-    // document.getElementById("kfactorValues").hidden = false;
-    // document.getElementById("kfactorT").innerHTML = kFactorT;
-    // document.getElementById("bendMaterial").innerHTML = bendMaterial.toFixed(4);
-    // document.getElementById("halfB").innerHTML = (bendMaterial/2).toFixed(4);
-    // document.getElementById("widthInner").innerHTML = widthInner;
-    // document.getElementById("heightInner").innerHTML = heightInner;
+    
+    let kFactorT = inputs.kFactor * inputs.kFactorThickness;
+    let bendMaterial = (inputs.angle * Math.PI / 360) * (2 * (inputs.innerRadius + kFactorT))
+    let widthInner = inputs.faceWidth - horizontalReturnCount * (inputs.innerRadius+inputs.kFactorThickness)
+    let heightInner = inputs.faceHeight - verticalReturnCount * (inputs.innerRadius+inputs.kFactorThickness)
+    let returnsInner = inputs.return - (inputs.innerRadius+inputs.kFactorThickness)
+    
+    // Set Panel Values
     panelBlank.width = Number(widthInner + (horizontalReturnCount * returnsInner) + (horizontalReturnCount * bendMaterial)).toFixed(4);
     panelBlank.height = Number(heightInner + (verticalReturnCount * returnsInner) + (verticalReturnCount * bendMaterial)).toFixed(4)
-    document.getElementById("totalWidth").innerHTML = this.panelBlank.width
-    document.getElementById("totalHeight").innerHTML = this.panelBlank.height;
-    document.getElementById("totalCutout").innerHTML = (Number(returnsInner) + Number(bendMaterial) - Number(innerRadius)).toFixed(4);
+    panelBlank.return = inputs.return;
     
-    let horizontalFold = horizontalReturnCount > 0 ? Number(widthInner) + Number(bendMaterial.toFixed(4)) : ''
-    // document.getElementById("widthFoldLine").innerHTML = horizontalFold;
+    // Update View
+    setElementValue("totalWidth", this.panelBlank.width);
+    setElementValue("totalHeight", this.panelBlank.height);
+    setElementValue("totalCutout", (Number(returnsInner) + Number(bendMaterial) - Number(inputs.innerRadius)).toFixed(4) );
     
-    let verticalFold = verticalReturnCount > 0 ? Number(heightInner) + Number(bendMaterial.toFixed(4)) : ''
-    // document.getElementById("heightFoldLine").innerHTML = verticalFold;
-    
-    // if (Number(horizontalReturnCount) + Number(verticalReturnCount) > 0) {
-    //     document.getElementById("returnInner").innerHTML =  returnsInner;
-    //     document.getElementById("returnFoldLine").innerHTML = (Number(returnsInner) + Number(bendMaterial/2)).toFixed(4);
-    //     document.getElementById("totalCutout").innerHTML = (Number(returnsInner) + Number(bendMaterial) - Number(innerRadius)).toFixed(4);
-    // } else {
-    //     document.getElementById("returnInner").innerHTML = '';
-    //     document.getElementById("returnFoldLine").innerHTML = '';
-    //     document.getElementById("totalCutout").innerHTML = '';
-    // }
 }
 
-function calculateHoles() {
-   let totalWidth = document.getElementById("totalWidth").innerHTML
-   let faceWidth = doSums(document.getElementById("faceWidth").value);
-  
-   // Get Inputs
-   let endOffset = document.getElementById("endOffset").value - 0;
-   let approxPitch = document.getElementById("approxPitch").value - 0;
+function calculateHoles(inputs) {
    
    //Calculate
-   let distanceToFill = faceWidth - 2*endOffset;
-   let guessedPitch = distanceToFill/approxPitch;
-   let pitch = guessedPitch < 0.5 ? 1 : Math.round(distanceToFill/approxPitch);
+   let distanceToFill = inputs.faceWidth - 2*inputs.endOffset;
+   let guessedPitch = distanceToFill/inputs.approxPitch;
+   let pitch = guessedPitch < 0.5 ? 1 : Math.round(distanceToFill/inputs.approxPitch);
    let totalHoles = pitch+1;
    let actualPitch = distanceToFill / pitch;
 
+   // Set Holes
+   for (let i=0;i<totalHoles;i++) {
+       let hole = { x: Number(i*actualPitch+inputs.endOffset), y: Number(panelBlank.height - Number(15))}
+       panelBlank.holes.push(hole)
+   }
+
+   // Display Values
    document.getElementById("distanceToFill").innerHTML = Number(distanceToFill).toFixed(4);
    document.getElementById("totalHoles").innerHTML = Number(totalHoles).toFixed(4);
    document.getElementById("actualPitch").innerHTML = Number(actualPitch).toFixed(4);
-
-   for (let i=0;i<totalHoles;i++) {
-       let hole = { x: Number(i*actualPitch+endOffset), y: Number(panelBlank.height - Number(15))}
-       panelBlank.holes.push(hole)
-   }
 }
 
-function buildPolygonFromNet() {
+function buildPolygonFromNet(inputs) {
 
-    let netDetails = getNetDetails();
+    let netDetails = getNetDetails(inputs);
+
     //polygon drawing goes left/down, so this is all upsidedown
     let poly = [
         {x:netDetails.minWidth,y:netDetails.cutout},
@@ -117,30 +110,26 @@ function buildPolygonFromNet() {
         {x:netDetails.cutout,y:netDetails.cutout},
     ]
 
-    let returnRight = document.getElementById("returnRight").checked;
-    let returnBottom = document.getElementById("returnBottom").checked;
-    let returnLeft = document.getElementById("returnLeft").checked;
-    let returnTop = document.getElementById("returnTop").checked;
     // If no right return, invert right corners
-    if (!returnRight) {
+    if (!inputs.returnRight) {
         var removeValFrom = [6,7];
         poly = poly.filter(function(value, index) {
              return removeValFrom.indexOf(index) == -1;
         })
     }
-    if (!returnBottom) {
+    if (!inputs.returnBottom) {
         var removeValFrom = [9,10];
         poly = poly.filter(function(value, index) {
              return removeValFrom.indexOf(index) == -1;
         })
     }
-    if (!returnLeft) {
+    if (!inputs.returnLeft) {
         var removeValFrom = [0,1];
         poly = poly.filter(function(value, index) {
              return removeValFrom.indexOf(index) == -1;
         })
     }
-    if (!returnTop) {
+    if (!inputs.returnTop) {
         var removeValFrom = [3,4];
         poly = poly.filter(function(value, index) {
              return removeValFrom.indexOf(index) == -1;
@@ -151,46 +140,38 @@ function buildPolygonFromNet() {
 }
 
 
-function getNetDetails() {
-    let faceWidth = document.getElementById("totalWidth").innerHTML - 0;
-    let faceHeight = document.getElementById("totalHeight").innerHTML - 0;
-    let faceReturn = document.getElementById("totalCutout").innerHTML -0 ;
-    let upstand = document.getElementById("upstand").value -0;
+function getNetDetails(inputs) {
     return {
-        minHeight: 0, maxHeight: faceHeight, 
-        minWidth: 0, maxWidth: faceWidth,
-        cutout: faceReturn, cutoutTop: faceHeight-faceReturn, cutoutSide: faceWidth-faceReturn,
-        upstand: upstand 
+        minHeight: 0, maxHeight: inputs.faceHeight, 
+        minWidth: 0, maxWidth: inputs.faceWidth,
+        cutout: inputs.faceReturn, cutoutTop: inputs.faceHeight-inputs.faceReturn, cutoutSide: inputs.faceWidth-inputs.faceReturn,
+        upstand: inputs.upstand 
     }
 }
 
 
 function download() {
 
-    // Generate File Name
-    var jobNumber = document.getElementById("jobNumber").value;
-    let faceWidth = doSums(document.getElementById("faceWidth").value);
-    let faceHeight = document.getElementById("faceHeight").value - 0;
-    let faceReturn = document.getElementById("faceReturn").value - 0;
-    let fileName = jobNumber + "_" + faceWidth + "x" + faceHeight + "-" +faceReturn + ".dxf"
+    // Generate File Name from inputs
+    const inputs = getInputs()
+    let fileName = inputs.jobNumber + "_" + inputs.faceWidth + "x" + inputs.faceHeight + "-" +inputs.faceReturn + ".dxf"
 
     // Build DXF File
-    let netDetails = getNetDetails();
-    let attemptTwo = fileStart();
-    console.log(panelBlank.holes)
-    panelBlank.holes.forEach(hole => attemptTwo+=addHole(hole.x+panelBlank.return, hole.y));
-    attemptTwo += addPolyLine();
+    let netDetails = getNetDetails(inputs);
+    let generatedDxf = fileStart();
+    panelBlank.holes.forEach(hole => generatedDxf+=addHole(hole.x+panelBlank.return, hole.y));
+    generatedDxf += addPolyLine();
     let poly = buildPolygonFromNet(netDetails)
-    poly.forEach(corner => attemptTwo+=addVertex(corner.x, corner.y))
-    attemptTwo += sectionEnd();
-    attemptTwo += fileEnd()
-    attemptTwo = attemptTwo
+    poly.forEach(corner => generatedDxf+=addVertex(corner.x, corner.y))
+    generatedDxf += sectionEnd();
+    generatedDxf += fileEnd()
+    generatedDxf = generatedDxf
         .replaceAll("${MAX_WIDTH}",netDetails.maxWidth)
         .replaceAll("${MAX_HEIGHT}",netDetails.maxHeight+netDetails.upstand)
 
 
     // Download file from generated file
-    let blob = new Blob([attemptTwo], {type:'text/plain'});
+    let blob = new Blob([generatedDxf], {type:'text/plain'});
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.style.display = 'none';
@@ -202,6 +183,9 @@ function download() {
 
 }
 
+
+
+/* CANVAS WORK IS PARKED */
 function clearCanvas() {
     var canvas = document.getElementById("canvas")
     var ctx = canvas.getContext('2d');
