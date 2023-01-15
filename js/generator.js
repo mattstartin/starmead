@@ -144,9 +144,13 @@ function buildPolygonFromNet(inputs) {
 
 function getNetDetails(inputs) {
     return {
-        minHeight: 0, maxHeight: inputs.faceHeight, 
-        minWidth: 0, maxWidth: inputs.faceWidth,
-        cutout: inputs.faceReturn, cutoutTop: inputs.faceHeight-inputs.faceReturn, cutoutSide: inputs.faceWidth-inputs.faceReturn,
+        minHeight: 0, 
+        minWidth: 0, 
+        maxHeight: this.panelBlank.height, 
+        maxWidth: this.panelBlank.width,
+        cutout: this.panelBlank.return, 
+        cutoutTop: this.panelBlank.height-this.panelBlank.return, 
+        cutoutSide: this.panelBlank.width-this.panelBlank.return,
         upstand: inputs.upstand 
     }
 }
