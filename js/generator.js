@@ -113,25 +113,25 @@ function buildPolygonFromNet(inputs) {
     ]
 
     // If no right return, invert right corners
-    if (!inputs.faceReturnRight) {
+    if (!inputs.returnRight) {
         var removeValFrom = [6,7];
         poly = poly.filter(function(value, index) {
              return removeValFrom.indexOf(index) == -1;
         })
     }
-    if (!inputs.faceReturnBottom) {
+    if (!inputs.returnBottom) {
         var removeValFrom = [9,10];
         poly = poly.filter(function(value, index) {
              return removeValFrom.indexOf(index) == -1;
         })
     }
-    if (!inputs.faceReturnLeft) {
+    if (!inputs.returnLeft) {
         var removeValFrom = [0,1];
         poly = poly.filter(function(value, index) {
              return removeValFrom.indexOf(index) == -1;
         })
     }
-    if (!inputs.faceReturnTop) {
+    if (!inputs.returnTop) {
         var removeValFrom = [3,4];
         poly = poly.filter(function(value, index) {
              return removeValFrom.indexOf(index) == -1;
@@ -160,10 +160,12 @@ function download() {
 
     // Build DXF File
     let netDetails = getNetDetails(inputs);
+    debugger
     let generatedDxf = fileStart();
     panelBlank.holes.forEach(hole => generatedDxf+=addHole(hole.x+panelBlank.return, hole.y));
     generatedDxf += addPolyLine();
-    let poly = buildPolygonFromNet(netDetails)
+    let poly = buildPolygonFromNet(inputs)
+    
     poly.forEach(corner => generatedDxf+=addVertex(corner.x, corner.y))
     generatedDxf += sectionEnd();
     generatedDxf += fileEnd()
