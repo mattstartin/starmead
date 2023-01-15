@@ -31,10 +31,12 @@ function getInputs() {
         returnLeft: document.getElementById("returnLeft").checked,
         returnTop: document.getElementById("returnTop").checked,
         returnBottom: document.getElementById("returnBottom").checked,
-        return: getNumberElement("faceReturn"),
+        faceReturn: getNumberElement("faceReturn"),
         endOffset: getNumberElement("endOffset"),
         approxPitch: getNumberElement("approxPitch"),
         jobNumber: document.getElementById("jobNumber").value,
+        upstand: getNumberElement("upstand"),
+        downstand: getNumberElement("downstand")
     }
 }
 
@@ -55,12 +57,12 @@ function kfactor(inputs) {
     let bendMaterial = (inputs.angle * Math.PI / 360) * (2 * (inputs.innerRadius + kFactorT))
     let widthInner = inputs.faceWidth - horizontalReturnCount * (inputs.innerRadius+inputs.kFactorThickness)
     let heightInner = inputs.faceHeight - verticalReturnCount * (inputs.innerRadius+inputs.kFactorThickness)
-    let returnsInner = inputs.return - (inputs.innerRadius+inputs.kFactorThickness)
+    let returnsInner = inputs.faceReturn - (inputs.innerRadius+inputs.kFactorThickness)
     
     // Set Panel Values
     panelBlank.width = Number(widthInner + (horizontalReturnCount * returnsInner) + (horizontalReturnCount * bendMaterial)).toFixed(4);
     panelBlank.height = Number(heightInner + (verticalReturnCount * returnsInner) + (verticalReturnCount * bendMaterial)).toFixed(4)
-    panelBlank.return = inputs.return;
+    panelBlank.return = inputs.faceReturn;
     
     // Update View
     setElementValue("totalWidth", this.panelBlank.width);
@@ -111,25 +113,25 @@ function buildPolygonFromNet(inputs) {
     ]
 
     // If no right return, invert right corners
-    if (!inputs.returnRight) {
+    if (!inputs.faceReturnRight) {
         var removeValFrom = [6,7];
         poly = poly.filter(function(value, index) {
              return removeValFrom.indexOf(index) == -1;
         })
     }
-    if (!inputs.returnBottom) {
+    if (!inputs.faceReturnBottom) {
         var removeValFrom = [9,10];
         poly = poly.filter(function(value, index) {
              return removeValFrom.indexOf(index) == -1;
         })
     }
-    if (!inputs.returnLeft) {
+    if (!inputs.faceReturnLeft) {
         var removeValFrom = [0,1];
         poly = poly.filter(function(value, index) {
              return removeValFrom.indexOf(index) == -1;
         })
     }
-    if (!inputs.returnTop) {
+    if (!inputs.faceReturnTop) {
         var removeValFrom = [3,4];
         poly = poly.filter(function(value, index) {
              return removeValFrom.indexOf(index) == -1;
