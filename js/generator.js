@@ -101,14 +101,14 @@ function buildPolygonFromNet(inputs) {
         {x:netDetails.minWidth,y:netDetails.cutout},
         {x:netDetails.minWidth,y:netDetails.cutoutTop},
         {x:netDetails.cutout,y:netDetails.cutoutTop},
-        {x:netDetails.cutout,y:netDetails.maxHeight},
-        {x:netDetails.cutoutSide,y:netDetails.maxHeight},
+        {x:netDetails.cutout,y:netDetails.maxHeight+0+netDetails.upstand},
+        {x:netDetails.cutoutSide,y:netDetails.maxHeight+0+netDetails.upstand},
         {x:netDetails.cutoutSide,y:netDetails.cutoutTop},
         {x:netDetails.maxWidth,y:netDetails.cutoutTop},
         {x:netDetails.maxWidth,y:netDetails.cutout},
         {x:netDetails.cutoutSide,y:netDetails.cutout},
-        {x:netDetails.cutoutSide,y:netDetails.minHeight-netDetails.upstand},
-        {x:netDetails.cutout,y:netDetails.minHeight-netDetails.upstand},
+        {x:netDetails.cutoutSide,y:netDetails.minHeight-netDetails.downstand},
+        {x:netDetails.cutout,y:netDetails.minHeight-netDetails.downstand},
         {x:netDetails.cutout,y:netDetails.cutout},
     ]
 
@@ -146,12 +146,13 @@ function getNetDetails(inputs) {
     return {
         minHeight: 0, 
         minWidth: 0, 
-        maxHeight: this.panelBlank.height, 
-        maxWidth: this.panelBlank.width,
+        maxHeight: Number(this.panelBlank.height), 
+        maxWidth: Number(this.panelBlank.width),
         cutout: this.panelBlank.return, 
         cutoutTop: this.panelBlank.height-this.panelBlank.return, 
         cutoutSide: this.panelBlank.width-this.panelBlank.return,
-        upstand: inputs.upstand 
+        upstand: inputs.upstand,
+        downstand: inputs.downstand 
     }
 }
 
@@ -166,7 +167,7 @@ function download() {
     let netDetails = getNetDetails(inputs);
     debugger
     let generatedDxf = fileStart();
-    panelBlank.holes.forEach(hole => generatedDxf+=addHole(hole.x+panelBlank.return, hole.y));
+    panelBlank.holes.forEach(hole => generatedDxf+=addHole(hole.x+panelBlank.return, hole.y+inputs.upstand));
     generatedDxf += addPolyLine();
     let poly = buildPolygonFromNet(inputs)
     
