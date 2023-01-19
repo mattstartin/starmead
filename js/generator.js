@@ -31,10 +31,12 @@ function getInputs() {
         returnLeft: document.getElementById("returnLeft").checked,
         returnTop: document.getElementById("returnTop").checked,
         returnBottom: document.getElementById("returnBottom").checked,
-        return: getNumberElement("faceReturn"),
+        faceReturn: getNumberElement("faceReturn"),
         endOffset: getNumberElement("endOffset"),
         approxPitch: getNumberElement("approxPitch"),
         jobNumber: document.getElementById("jobNumber").value,
+        upstand: getNumberElement("upstand"),
+        downstand: getNumberElement("downstand")
     }
 }
 
@@ -55,12 +57,12 @@ function kfactor(inputs) {
     let bendMaterial = (inputs.angle * Math.PI / 360) * (2 * (inputs.innerRadius + kFactorT))
     let widthInner = inputs.faceWidth - horizontalReturnCount * (inputs.innerRadius+inputs.kFactorThickness)
     let heightInner = inputs.faceHeight - verticalReturnCount * (inputs.innerRadius+inputs.kFactorThickness)
-    let returnsInner = inputs.return - (inputs.innerRadius+inputs.kFactorThickness)
+    let returnsInner = inputs.faceReturn - (inputs.innerRadius+inputs.kFactorThickness)
     
     // Set Panel Values
     panelBlank.width = Number(widthInner + (horizontalReturnCount * returnsInner) + (horizontalReturnCount * bendMaterial)).toFixed(4);
     panelBlank.height = Number(heightInner + (verticalReturnCount * returnsInner) + (verticalReturnCount * bendMaterial)).toFixed(4)
-    panelBlank.return = inputs.return;
+    panelBlank.return = inputs.faceReturn;
     
     // Update View
     setElementValue("totalWidth", this.panelBlank.width);
@@ -99,14 +101,14 @@ function buildPolygonFromNet(inputs) {
         {x:netDetails.minWidth,y:netDetails.cutout},
         {x:netDetails.minWidth,y:netDetails.cutoutTop},
         {x:netDetails.cutout,y:netDetails.cutoutTop},
-        {x:netDetails.cutout,y:netDetails.maxHeight},
-        {x:netDetails.cutoutSide,y:netDetails.maxHeight},
+        {x:netDetails.cutout,y:netDetails.maxHeight+0+netDetails.upstand},
+        {x:netDetails.cutoutSide,y:netDetails.maxHeight+0+netDetails.upstand},
         {x:netDetails.cutoutSide,y:netDetails.cutoutTop},
         {x:netDetails.maxWidth,y:netDetails.cutoutTop},
         {x:netDetails.maxWidth,y:netDetails.cutout},
         {x:netDetails.cutoutSide,y:netDetails.cutout},
-        {x:netDetails.cutoutSide,y:netDetails.minHeight-netDetails.upstand},
-        {x:netDetails.cutout,y:netDetails.minHeight-netDetails.upstand},
+        {x:netDetails.cutoutSide,y:netDetails.minHeight-netDetails.downstand},
+        {x:netDetails.cutout,y:netDetails.minHeight-netDetails.downstand},
         {x:netDetails.cutout,y:netDetails.cutout},
     ]
 
@@ -142,10 +144,15 @@ function buildPolygonFromNet(inputs) {
 
 function getNetDetails(inputs) {
     return {
-        minHeight: 0, maxHeight: inputs.faceHeight, 
-        minWidth: 0, maxWidth: inputs.faceWidth,
-        cutout: inputs.faceReturn, cutoutTop: inputs.faceHeight-inputs.faceReturn, cutoutSide: inputs.faceWidth-inputs.faceReturn,
-        upstand: inputs.upstand 
+        minHeight: 0, 
+        minWidth: 0, 
+        maxHeight: Number(this.panelBlank.height), 
+        maxWidth: Number(this.panelBlank.width),
+        cutout: this.panelBlank.return, 
+        cutoutTop: this.panelBlank.height-this.panelBlank.return, 
+        cutoutSide: this.panelBlank.width-this.panelBlank.return,
+        upstand: inputs.upstand,
+        downstand: inputs.downstand 
     }
 }
 
@@ -158,10 +165,12 @@ function download() {
 
     // Build DXF File
     let netDetails = getNetDetails(inputs);
+    debugger
     let generatedDxf = fileStart();
-    panelBlank.holes.forEach(hole => generatedDxf+=addHole(hole.x+panelBlank.return, hole.y));
+    panelBlank.holes.forEach(hole => generatedDxf+=addHole(hole.x+panelBlank.return, hole.y+inputs.upstand));
     generatedDxf += addPolyLine();
-    let poly = buildPolygonFromNet(netDetails)
+    let poly = buildPolygonFromNet(inputs)
+    
     poly.forEach(corner => generatedDxf+=addVertex(corner.x, corner.y))
     generatedDxf += sectionEnd();
     generatedDxf += fileEnd()
