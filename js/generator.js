@@ -245,3 +245,11 @@ function drawCanvas(poly) {
     // ctx.fillText("HEIGHT",50,50);
 
 }
+
+
+
+function changeReturnType(elem) {
+    console.log(elem.checked)
+    document.getElementById("sameReturns").hidden = elem.checked;
+    document.getElementById("customReturns").hidden = !elem.checked;
+}
