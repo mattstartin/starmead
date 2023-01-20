@@ -38,22 +38,28 @@
     <div class="col s7">
         <ul class="collapsible">
             <li class="active">
-              <div class="collapsible-header"><i class="material-icons">filter_drama</i>Size</div>
+              <div class="collapsible-header">
+                <i class="material-icons">aspect_ratio</i>Size
+                <span id="sizeBadge" class="new badge" data-badge-caption="">2250 x 1000</span>
+              </div>
               <div class="collapsible-body">
                 <div class="row">
                     <div class="col s6">
-                        <input id="faceWidth" value="2250">
+                        <input id="faceWidth" value="2250" onchange="sizeChange()">
                         <label for="faceWidth">Face Width</label>
                     </div>
                     <div class="col s6">
-                        <input type="number" id="faceHeight" value="1000">
+                        <input type="number" id="faceHeight" value="1000" onchange="sizeChange()">
                         <label for="faceHeight">Face Height</label>
                     </div>
                 </div>
               </div>
             </li>
             <li>
-              <div class="collapsible-header"><i class="material-icons">place</i>Returns</div>
+              <div class="collapsible-header">
+                <i class="material-icons">assignment_return</i>Returns
+                <span id="returnBadge" class="new badge" data-badge-caption="">Standard 50</span>
+              </div>
               <div class="collapsible-body">
                 Custom Returns
                 <div class="switch">
@@ -66,7 +72,7 @@
                   </div>
                 <div class="row" id="sameReturns">
                     <div class="col s6">
-                        <input type="number" id="faceReturn" value="50">
+                        <input type="number" id="faceReturn" value="50" onchange="returnChange()">
                         <label for="faceReturn">Return Depth</label>
                     </div>
                     <div class="col s3">
@@ -123,14 +129,85 @@
               </div>
             </li>
             <li>
-              <div class="collapsible-header"><i class="material-icons">whatshot</i>Third</div>
-              <div class="collapsible-body halfheight"><span>Lorem ipsum dolor sit amet.</span></div>
+              <div class="collapsible-header"><i class="material-icons">open_in_full</i>Stands</div>
+              <div class="collapsible-body">
+                <div class="row">
+                    <div class="col s6">
+                        <input id="upstand" type="number" value="0" >
+                        <label for="upstand">Upstand</label>
+                    </div>
+                    <div class="col s6">
+                        <input type="number" id="downstand"  value="0">
+                        <label for="downstand">Downstand</label>
+                    </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="collapsible-header"><i class="material-icons">radio_button_unchecked</i>Custom Holes</div>
+              <div class="collapsible-body">
+                <div class="row">
+                    <div class="col s6">
+                        <input type="number" id="endOffset" value="50">
+                        <label for="endOffset">End Offset</label>
+                    </div>
+                    <div class="col s6">
+                        <input type="number" id="approxPitch" value="600">
+                        <label for="approxPitch">Approx Pitch</label>
+                    </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="collapsible-header"><i class="material-icons">square_foot</i>Custom K Factor</div>
+              <div class="collapsible-body">
+                <div class="row">
+                    <div class="col s6">
+                        <input type="number" id="kFactor" value="0.45">
+                        <label for="kFactor">K Factor</label>
+                    </div>
+                    <div class="col s6">
+                        <input type="number" id="kFactorThickness" value="2">
+                        <label for="kFactorThickness">Material Thickness</label>
+                    </div>
+                    <div class="col s6">
+                        <input type="number" id="innerRadius" value="1">
+                        <label for="innerRadius">Inner Radius</label>
+                    </div>
+                    <div class="col s6">
+                        <input type="number" id="angle" value="90">
+                        <label for="angle">Angle</label>
+                    </div>
+                </div>
+              </div>
             </li>
           </ul>
                 
     </div>
     <div class="col s5">
-        <span class="flow-text">RIGHT</span>
+        <span class="flow-text">
+            
+            <div class="row">
+                <div class="col s12">
+                    <input id="jobNumber">
+                    <label for="jobNumber">Job Number</label>
+                </div>
+                <div class="col s4">
+                    <button class="waves-effect waves-light btn" onclick="calculate()"><i class="material-icons left">build</i>Calc</button>
+                </div>
+                <div class="col s4">
+                    <button class="waves-effect waves-light btn" onclick="download()"><i class="material-icons left">cloud_download</i>DL</button>
+                </div>
+                <div class="col s4">
+                    <button class="waves-effect waves-light btn" onclick="clearCanvas()"><i class="material-icons left">autorenew</i>Clear</button>
+                </div>
+            </div>
+            <div class="row">
+                <div id="drawingSection" class="col s12">
+                     <canvas  id="canvas" class="canvas"></canvas>
+                </div>
+            </div>
+        </span>
     </div>
 </div>
 

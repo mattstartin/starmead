@@ -249,7 +249,17 @@ function drawCanvas(poly) {
 
 
 function changeReturnType(elem) {
-    console.log(elem.checked)
     document.getElementById("sameReturns").hidden = elem.checked;
     document.getElementById("customReturns").hidden = !elem.checked;
+    
+    const badge = !elem.checked ? "Standard " + getNumberElement("faceReturn") : "Custom";
+    document.getElementById("returnBadge").textContent = badge;
+}
+function returnChange() {
+    document.getElementById("returnBadge").textContent = 'Standard ' + getNumberElement("faceReturn").toString();
+}
+function sizeChange() {
+    const width = doSums(document.getElementById("faceWidth").value)
+    const height = doSums(document.getElementById("faceHeight").value)
+    document.getElementById("sizeBadge").textContent = width.toString() + ' x ' + height.toString();
 }
