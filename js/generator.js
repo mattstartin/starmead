@@ -205,15 +205,17 @@ function clearCanvas() {
 
 function drawPolygon(poly) {
     
-    const scale=doSums("500"/this.panelBlank.width)
+    const scale=doSums("450"/this.panelBlank.width)
     const polygon = document.getElementById("polygon")
     let points = poly.flatMap(point => point.x + '-' + point.y).toString().replaceAll(",", " ").replaceAll("-", ",")
     polygon.setAttribute("points", points);
     polygon.setAttribute("style", "fill:white;stroke:black;stroke-width:2;transform:scale("+scale+")")
     
     const svg = document.getElementById("svg")
-    svg.setAttribute("width", "550")
-    svg.setAttribute("height", "300")
+    svg.setAttribute("width", "500")
+    svg.setAttribute("height", "225")
+
+    document.getElementById("previewCard").setAttribute("style","display:block")
     
 }
 

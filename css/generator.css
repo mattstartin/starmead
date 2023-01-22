@@ -10,6 +10,8 @@
     width: 70vw;
     float: left; 
 } */
+nav { background-color: #9c96c0;}
+body { background-color: #f5f5f5;}
 .logo { height: 60px; }
 .canvas {
     margin-left: 2%;
