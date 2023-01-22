@@ -17,6 +17,7 @@ function calculate() {
     calculateHoles(inputs);
     let poly = buildPolygonFromNet(inputs)
     // drawCanvas(poly);
+    drawPolygon(poly);
 }
 
 function getInputs() {
@@ -65,9 +66,9 @@ function kfactor(inputs) {
     panelBlank.return = inputs.faceReturn;
     
     // Update View
-    setElementValue("totalWidth", this.panelBlank.width);
-    setElementValue("totalHeight", this.panelBlank.height);
-    setElementValue("totalCutout", (Number(returnsInner) + Number(bendMaterial) - Number(inputs.innerRadius)).toFixed(4) );
+    // setElementValue("totalWidth", this.panelBlank.width);
+    // setElementValue("totalHeight", this.panelBlank.height);
+    // setElementValue("totalCutout", (Number(returnsInner) + Number(bendMaterial) - Number(inputs.innerRadius)).toFixed(4) );
     
 }
 
@@ -87,9 +88,9 @@ function calculateHoles(inputs) {
    }
 
    // Display Values
-   document.getElementById("distanceToFill").innerHTML = Number(distanceToFill).toFixed(4);
-   document.getElementById("totalHoles").innerHTML = Number(totalHoles).toFixed(4);
-   document.getElementById("actualPitch").innerHTML = Number(actualPitch).toFixed(4);
+//    document.getElementById("distanceToFill").innerHTML = Number(distanceToFill).toFixed(4);
+//    document.getElementById("totalHoles").innerHTML = Number(totalHoles).toFixed(4);
+//    document.getElementById("actualPitch").innerHTML = Number(actualPitch).toFixed(4);
 }
 
 function buildPolygonFromNet(inputs) {
@@ -201,37 +202,53 @@ function clearCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
+
+function drawPolygon(poly) {
+    
+    const scale=doSums("500"/this.panelBlank.width)
+    const polygon = document.getElementById("polygon")
+    let points = poly.flatMap(point => point.x + '-' + point.y).toString().replaceAll(",", " ").replaceAll("-", ",")
+    polygon.setAttribute("points", points);
+    polygon.setAttribute("style", "fill:white;stroke:black;stroke-width:2;transform:scale("+scale+")")
+    
+    const svg = document.getElementById("svg")
+    svg.setAttribute("width", "550")
+    svg.setAttribute("height", "300")
+    
+}
+
 function drawCanvas(poly) {
 
-    // TODO: Could be used to draw guidelines?
-    // let x_divisions = [0, faceReturn-0, faceWidth-faceReturn, faceWidth-0]
-    // let y_divisions = [0, faceReturn-0, faceHeight-faceReturn, faceHeight-0]
 
-    var canvas = document.getElementById("canvas")
-    const { width, height } = canvas.getBoundingClientRect();
-    
-        // Draw Net
-    var ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, width, height);
-    // ctx.scale(1,1);
-    // ctx.scale(0.5,0.5)
-    
-    //optimal size is 2500x1000, so scale in relation to that
-    let faceWidth = document.getElementById("totalWidth").innerHTML - 0;
-    let faceHeight = document.getElementById("totalHeight").innerHTML - 0;
-    
-    ctx.scale(Number(faceWidth)/2500, Number(faceHeight)/1000)
-    ctx.beginPath();
+    // // TODO: Could be used to draw guidelines?
+    // // let x_divisions = [0, faceReturn-0, faceWidth-faceReturn, faceWidth-0]
+    // // let y_divisions = [0, faceReturn-0, faceHeight-faceReturn, faceHeight-0]
 
-    ctx.moveTo(poly[0].x/10+20, poly[0].y/10+20);
+    // var canvas = document.getElementById("canvas")
+    // const { width, height } = canvas.getBoundingClientRect();
     
-    for(i=1; i < poly.length; i++) {
-        ctx.lineTo(poly[i].x/10+20, poly[i].y/10+20)
-    }
-    ctx.closePath();
+    //     // Draw Net
+    // var ctx = canvas.getContext('2d');
+    // ctx.clearRect(0, 0, width, height);
+    // // ctx.scale(1,1);
+    // // ctx.scale(0.5,0.5)
+    
+    // //optimal size is 2500x1000, so scale in relation to that
+    // let faceWidth = document.getElementById("totalWidth").innerHTML - 0;
+    // let faceHeight = document.getElementById("totalHeight").innerHTML - 0;
+    
+    // ctx.scale(Number(faceWidth)/2500, Number(faceHeight)/1000)
+    // ctx.beginPath();
+
+    // ctx.moveTo(poly[0].x/10+20, poly[0].y/10+20);
+    
+    // for(i=1; i < poly.length; i++) {
+    //     ctx.lineTo(poly[i].x/10+20, poly[i].y/10+20)
+    // }
+    // ctx.closePath();
 
 
-    ctx.fill();
+    // ctx.fill();
 
 
     
