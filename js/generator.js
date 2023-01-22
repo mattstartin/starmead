@@ -1,6 +1,7 @@
 
 panelBlank = resetPanel();
 isV2 = false;
+previewVisible = false;
 
 function resetPanel() {
     return {
@@ -221,7 +222,7 @@ function drawPolygon(poly) {
     svg.setAttribute("height", "225")
 
     document.getElementById("previewCard").setAttribute("style","display:block")
-    
+    this.previewVisible = true;
 }
 
 function drawCanvas(poly) {
@@ -286,4 +287,9 @@ function sizeChange() {
     const width = doSums(document.getElementById("faceWidth").value)
     const height = doSums(document.getElementById("faceHeight").value)
     document.getElementById("sizeBadge").textContent = width.toString() + ' x ' + height.toString();
+
+    if(this.previewVisible) {
+        document.getElementById("previewCard").setAttribute("style","display:none")
+        M.toast({html: 'Recalculate before download'})
+    }
 }
