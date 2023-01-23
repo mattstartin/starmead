@@ -40,7 +40,8 @@ function getInputs() {
         approxPitch: getNumberElement("approxPitch"),
         jobNumber: document.getElementById("jobNumber").value,
         upstand: getNumberElement("upstand"),
-        downstand: getNumberElement("downstand")
+        downstand: getNumberElement("downstand"),
+        holeDiameter: getNumberElement("holeDiameter")
     }
 }
 
@@ -174,7 +175,7 @@ function download() {
     let netDetails = getNetDetails(inputs);
     debugger
     let generatedDxf = fileStart();
-    panelBlank.holes.forEach(hole => generatedDxf+=addHole(hole.x+panelBlank.return, hole.y+inputs.upstand));
+    panelBlank.holes.forEach(hole => generatedDxf+=addHole(hole.x+panelBlank.return, hole.y+inputs.upstand, inputs.holeDiameter/2));
     generatedDxf += addPolyLine();
     let poly = buildPolygonFromNet(inputs)
     

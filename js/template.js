@@ -360,7 +360,7 @@ function addVertex(x,y) {
     "0" + "\n" 
 }
 
-function addHole(x,y) {
+function addHole(x,y,radius) {
     return "CIRCLE" + "\n" +
     "5" + "\n" +
     "6F" + "\n" +
@@ -377,7 +377,7 @@ function addHole(x,y) {
     "30" + "\n" +
     "0" + "\n" +
     "40" + "\n" +
-    "2" + "\n" +
+    radius + "\n" +
     "0" + "\n";
 }
 
