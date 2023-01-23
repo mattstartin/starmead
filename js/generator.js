@@ -28,7 +28,7 @@ function getInputs() {
         kFactor: getNumberElement("kFactor"),
         kFactorThickness: getNumberElement("kFactorThickness"),
         innerRadius: getNumberElement("innerRadius"),
-        angle: getNumberElement("angle"),
+        angle: 90, 
         faceWidth: doSums(document.getElementById("faceWidth").value),
         faceHeight: getNumberElement("faceHeight"),
         returnRight: document.getElementById("returnRight").checked,
