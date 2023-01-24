@@ -30,7 +30,7 @@ function getInputs() {
         innerRadius: getNumberElement("innerRadius"),
         angle: 90, 
         faceWidth: doSums(document.getElementById("faceWidth").value),
-        faceHeight: getNumberElement("faceHeight"),
+        faceHeight: doSums(document.getElementById("faceHeight").value),
         returnRight: document.getElementById("returnRight").checked,
         returnLeft: document.getElementById("returnLeft").checked,
         returnTop: document.getElementById("returnTop").checked,
