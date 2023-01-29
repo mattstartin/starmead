@@ -1,3 +1,9 @@
+// Materiizecss Modal
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems, {});
+  });
+
 
 panelBlank = resetPanel();
 isV2 = false;
@@ -21,6 +27,8 @@ function calculate(isV2) {
     let poly = buildPolygonFromNet(inputs)
     // drawCanvas(poly);
     if (this.isV2) drawPolygon(poly);
+    if (this.isV2) fillTechSpec(poly);
+
 }
 
 function getInputs() {
@@ -227,6 +235,11 @@ function drawPolygon(poly) {
 
     document.getElementById("previewCard").setAttribute("style","display:block")
     this.previewVisible = true;
+}
+
+function fillTechSpec(poly) {
+    document.getElementById("techSpecWidth").innerText = panelBlank.width;
+    document.getElementById("techSpecHeight").innerText = panelBlank.height;
 }
 
 function drawCanvas(poly) {

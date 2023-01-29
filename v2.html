@@ -210,9 +210,17 @@
             </div>
             <div class="card-action">
                 <button class="waves-effect waves-light btn" onclick="download()"><i class="material-icons left">cloud_download</i>Download</button>
+                <a class="waves-effect waves-light btn modal-trigger" href="#modal1"><i class="material-icons left">info</i>Tech Spec</a>
             </div>
         </div>
 
+        <div id="modal1" class="modal">
+            <div class="modal-content">
+            <h4>Tech Spec</h4>
+            <p>Width: </p><div id="techSpecWidth"></div>
+            <p>Height: </p><div id="techSpecHeight"></div>
+            </div>
+        </div>
               <!-- <div class="row">
                 Preview
                 <div id="drawingSection" class="col s12">
