@@ -67,7 +67,10 @@ function kfactor(inputs) {
     // Set Panel Values
     panelBlank.width = Number(widthInner + (horizontalReturnCount * returnsInner) + (horizontalReturnCount * bendMaterial)).toFixed(4);
     panelBlank.height = Number(heightInner + (verticalReturnCount * returnsInner) + (verticalReturnCount * bendMaterial)).toFixed(4)
-    panelBlank.return = returnsInner;
+    // panelBlank.return = returnsInner;
+    debugger
+    let cornerCutout = Number(returnsInner) + Number(bendMaterial) - Number(inputs.innerRadius);
+    panelBlank.return = cornerCutout;
     
     // Update View
     if(!this.isV2) {
