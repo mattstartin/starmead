@@ -292,5 +292,6 @@ function sizeChange() {
     if(this.previewVisible) {
         document.getElementById("previewCard").setAttribute("style","display:none")
         M.toast({html: 'Recalculate before download'})
+        this.previewVisible = false;
     }
 }
