@@ -128,15 +128,19 @@
               </div>
             </li>
             <li>
-              <div class="collapsible-header"><i class="material-icons">open_in_full</i>Upstand / Downstand</div>
+              <div class="collapsible-header">
+                <i class="material-icons">open_in_full</i>Upstand / Downstand
+                <span id="standBadge" class="new badge deep-orange" data-badge-caption="">
+                    <span>0</span> | <span>0</span>
+               </div>
               <div class="collapsible-body">
                 <div class="row">
                     <div class="col s6">
-                        <input id="upstand" type="number" value="0" onchange="valueChanged()">
+                        <input id="upstand" type="number" value="0" onchange="changeStands()">
                         <label for="upstand">Upstand</label>
                     </div>
                     <div class="col s6">
-                        <input type="number" id="downstand"  value="0" onchange="valueChanged()">
+                        <input type="number" id="downstand"  value="0" onchange="changeStands()">
                         <label for="downstand">Downstand</label>
                     </div>
                 </div>

@@ -288,7 +288,12 @@ function drawCanvas(poly) {
 
 }
 
-
+function changeStands() {
+    const upstand = getNumberElement("upstand").toString();
+    const downstand = getNumberElement("downstand").toString()
+    document.getElementById("standBadge").textContent = upstand + ' | ' + downstand;
+    valueChanged();
+}
 
 function changeReturnType(elem) {
     document.getElementById("sameReturns").hidden = elem.checked;
@@ -309,7 +314,6 @@ function sizeChange() {
     document.getElementById("sizeBadge").textContent = width.toString() + ' x ' + height.toString();
 
     valueChanged();
-    
 }
 
 function valueChanged() {
