@@ -291,7 +291,8 @@ function drawCanvas(poly) {
 function changeStands() {
     const upstand = getNumberElement("upstand").toString();
     const downstand = getNumberElement("downstand").toString()
-    document.getElementById("standBadge").textContent = upstand + ' | ' + downstand;
+    document.getElementById("upstandBadgeCount").textContent = upstand;
+    document.getElementById("downstandBadgeCount").textContent = downstand;
     valueChanged();
 }
 
