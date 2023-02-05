@@ -296,15 +296,23 @@ function changeReturnType(elem) {
     
     const badge = !elem.checked ? "Standard " + getNumberElement("faceReturn") : "Custom";
     document.getElementById("returnBadge").textContent = badge;
+
+    valueChanged();
 }
 function returnChange() {
     document.getElementById("returnBadge").textContent = 'Standard ' + getNumberElement("faceReturn").toString();
+    valueChanged();
 }
 function sizeChange() {
     const width = doSums(document.getElementById("faceWidth").value)
     const height = doSums(document.getElementById("faceHeight").value)
     document.getElementById("sizeBadge").textContent = width.toString() + ' x ' + height.toString();
 
+    valueChanged();
+    
+}
+
+function valueChanged() {
     if(this.previewVisible) {
         document.getElementById("previewCard").setAttribute("style","display:none")
         M.toast({html: 'Recalculate before download'})
