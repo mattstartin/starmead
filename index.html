@@ -9,7 +9,7 @@
 <link type="text/css" rel="stylesheet" href="./css/materialize.min.css"  media="screen,projection"/>
 <link rel="stylesheet" href="./css/generator.css">
 <head>
-    <title>Starmead Panel Calculator</title>
+    <title>V2 Panel Calculator</title>
 	<link rel="shortcut icon" href="./images/favicon/favicon.ico">
 	<link rel="icon" sizes="16x16 32x32 64x64" href="./images/favicon/favicon.ico">
 	<link rel="icon" type="image/png" sizes="196x196" href="./images/favicon/favicon-192.png">
@@ -21,264 +21,220 @@
 	</head>
 
 <nav>
-<div class="nav-wrapper">
-    <ul id="nav-mobile" class="centre">
-        <li><img src="./images/starmead.png" class="logo"></img></li>
-        <li>DXF Generator</li>
-    </ul>
-    <ul class="right">
-        <li>
-            <a href="v2.html" class="waves-effect waves-light btn"><i class="material-icons left">cloud</i>V2 Preview</a>
-        </li>
-    </ul>
-</div>
+    <div class="nav-wrapper">
+        <ul id="nav-mobile" class="centre">
+            <li><img src="./images/starmead.png" class="logo"></img></li>
+            <li>DXF Generator</li>
+        </ul>
+    </div>
 </nav>
 
-<div class="row left">
-    <div class="col s3">
-        <ul class="collection">
-            <li class="collection-item">
-                <h6>Size</h6>
+<div class="row" style="margin-top: 30px;">
+    <div class="col s7">
+        <ul class="collapsible">
+            <li class="active">
+              <div class="collapsible-header">
+                <i class="material-icons">aspect_ratio</i>Size
+                <span id="sizeBadge" class="new badge deep-orange" data-badge-caption="">2250 x 1000</span>
+              </div>
+              <div class="collapsible-body">
                 <div class="row">
-                    <div class="col s6">
-                        <input id="faceWidth" value="2250">
-                        <label for="faceWidth">Face Width</label>
+                    <div class="col s4">
+                        <input id="faceWidth" value="2250" onchange="sizeChange()">
+                        <label for="faceWidth">Width</label>
                     </div>
-                    <div class="col s6">
-                        <input type="number" id="faceHeight" value="1000">
-                        <label for="faceHeight">Face Height</label>
+                    <div class="col s4">
+                        <input id="faceHeight" value="1000" onchange="sizeChange()">
+                        <label for="faceHeight">Height</label>
                     </div>
+                    <div class="col s4">
+                        <input type="number" id="kFactorThickness" value="2" onchange="valueChanged()">
+                        <label for="kFactorThickness">Material Thickness</label>
+                    </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="collapsible-header">
+                <i class="material-icons">assignment_return</i>Returns
+                <span id="returnBadge" class="new badge deep-orange" data-badge-caption="">Standard 50</span>
+              </div>
+              <div class="collapsible-body">
+                Custom Returns
+                <div class="switch">
+                    <label>
+                      Off
+                      <input id="returnType" type="checkbox" onClick="changeReturnType(this)">
+                      <span class="lever"></span>
+                      On
+                    </label>
+                  </div>
+                <div class="row" id="sameReturns">
                     <div class="col s6">
-                        <input type="number" id="faceReturn" value="50">
+                        <input type="number" id="faceReturn" value="50" onchange="returnChange()">
                         <label for="faceReturn">Return Depth</label>
                     </div>
-                   
-                </div>
-            </li>
-            <li class="collection-item">
-                <div class="row">
-                    <div class="col s6">
-                        <input id="upstand" type="number" value="0" >
-                        <label for="upstand">Upstand</label>
-                    </div>
-                    <div class="col s6">
-                        <input type="number" id="downstand"  value="0">
-                        <label for="downstand">Downstand</label>
-                    </div>
-                </div>
-            </li>
-            <li class="collection-item">
-                <h6>Returns</h6>
-                <div class="row">
                     <div class="col s3">
                         <label>
-                            <input id="returnLeft" type="checkbox" class="filled-in" checked="checked" />
+                            <input id="returnLeft" type="checkbox" class="filled-in" checked="checked"  onchange="valueChanged()" />
                             <span>Left</span>
                         </label>
                     </div>
                     <div class="col s3">
                         <label>
-                            <input id="returnRight" type="checkbox" class="filled-in" checked="checked" />
+                            <input id="returnRight" type="checkbox" class="filled-in" checked="checked" onchange="valueChanged()" />
                             <span>Right</span>
                         </label>
                     </div>
                     <div class="col s3">
                         <label>
-                            <input id="returnTop"  type="checkbox" class="filled-in" checked="checked" />
+                            <input id="returnTop"  type="checkbox" class="filled-in" checked="checked" onchange="valueChanged()" />
                             <span>Top</span>
                         </label>
                     </div>
                     <div class="col s3">
                         <label>
-                            <input id="returnBottom"  type="checkbox" class="filled-in" checked="checked" />
+                            <input id="returnBottom"  type="checkbox" class="filled-in" checked="checked" onchange="valueChanged()" />
                             <span>Bottom</span>
                         </label>
                     </div>
                 </div>
+                <div class="row" id="customReturns" hidden>
+                    <div class="col s3">
+                        <label>
+                            <input id="leftReturn" value="50" onchange="valueChanged()">
+                            <label for="faceWidth">Left Return</label>
+                        </label>
+                    </div>
+                    <div class="col s3">
+                        <label>
+                            <input id="rightReturn" value="50" onchange="valueChanged()">
+                            <label for="faceWidth">Right Return</label>
+                        </label>
+                    </div>
+                    <div class="col s3">
+                        <label>
+                            <input id="topReturn" value="50" onchange="valueChanged()">
+                            <label for="faceWidth">Top Return</label>
+                        </label>
+                    </div>
+                    <div class="col s3">
+                        <label>
+                            <input id="bottomReturn" value="50" onchange="valueChanged()">
+                            <label for="faceWidth">Bottom Return</label>
+                        </label>
+                    </div>
+                </div>
+              </div>
             </li>
-        </ul>
-            
-
-            
-
-            <!-- Thickness:
-            <input type="text" id="Panel_Thickness"><p>
-        
-            <input type="checkbox" id="Upstand_Yes_No">
-            <label for="Upstand_Yes_No">Upstand</label>
-            <input type="number" id="Upstand" disabled>
-        
-            <input type="checkbox" id="Downstand_Yes_No">
-            <label for="Downstand_Yes_No">Downstand</label>
-            <input type="number" id="Downstand" disabled><p> -->
-
-        
-        <button class="waves-effect waves-light btn" onclick="calculate(false)"><i class="material-icons left">build</i>Calculate</button>
-        
-    </div>
-    <div class="col s3">
-        <ul class="collection">
-            <li class="collection-item">
-                <h6>K Factor</h6>
+            <li>
+              <div class="collapsible-header"><i class="material-icons">open_in_full</i>Upstand / Downstand</div>
+              <div class="collapsible-body">
                 <div class="row">
                     <div class="col s6">
-                        <input type="number" id="kFactor" value="0.45">
+                        <input id="upstand" type="number" value="0" onchange="valueChanged()">
+                        <label for="upstand">Upstand</label>
+                    </div>
+                    <div class="col s6">
+                        <input type="number" id="downstand"  value="0" onchange="valueChanged()">
+                        <label for="downstand">Downstand</label>
+                    </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="collapsible-header"><i class="material-icons">radio_button_unchecked</i>Holes</div>
+              <div class="collapsible-body">
+                <div class="row">
+                    <div class="col s4">
+                        <input type="number" id="endOffset" value="50" onchange="valueChanged()">
+                        <label for="endOffset">End Offset</label>
+                    </div>
+                    <div class="col s4">
+                        <input type="number" id="approxPitch" value="600" onchange="valueChanged()">
+                        <label for="approxPitch">Approx Pitch</label>
+                    </div>
+                    <div class="col s4">
+                        <input type="number" id="holeDiameter" value="4" onchange="valueChanged()">
+                        <label for="holeDiameter">Diameter</label>
+                    </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="collapsible-header"><i class="material-icons">square_foot</i>Sheet Metal Settings</div>
+              <div class="collapsible-body">
+                <div class="row">
+                    <div class="col s6">
+                        <input type="number" id="kFactor" value="0.45" onchange="valueChanged()">
                         <label for="kFactor">K Factor</label>
                     </div>
                     <div class="col s6">
-                        <input type="number" id="kFactorThickness" value="2">
-                        <label for="kFactorThickness">Material Thickness</label>
-                    </div>
-                    <div class="col s6">
-                        <input type="number" id="innerRadius" value="1">
+                        <input type="number" id="innerRadius" value="1" onchange="valueChanged()">
                         <label for="innerRadius">Inner Radius</label>
                     </div>
-                    <div class="col s6">
-                        <input type="number" id="angle" value="90">
-                        <label for="angle">Angle</label>
-                    </div>
                 </div>
+              </div>
             </li>
-            <li class="collection-item" id="kfactorValues">
-                <!-- <table  class="striped">
-                    <tbody>
-                      <tr>
-                        <td>t</td>
-                        <td><div id="kfactorT"></div></td>
-                      </tr>
-                      <tr>
-                        <td>Material for Bend</td>
-                        <td><div id="bendMaterial"></div></td>
-                      </tr>
-                      <tr>
-                        <td>Half b</td>
-                        <td><div id="halfB"></div></td>
-                      </tr>
-                    </tbody>
-                  </table> -->
-                  <!-- <hr />
-                  <table  class="striped">
-                      <thead>
-                          <tr>
-                              <td></td>
-                              <td>Inner</td>
-                              <td>Fold Lines</td>
-                          </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>Width</td>
-                          <td><div id="widthInner"></div></td>
-                          <td><div id="widthFoldLine"></div></td>
-                        </tr>
-                        <tr>
-                          <td>Height</td>
-                          <td><div id="heightInner"></div></td>
-                          <td><div id="heightFoldLine"></div></td>
-                        </tr>
-                        <tr>
-                          <td>Returns</td>
-                          <td><div id="returnInner"></div></td>
-                          <td><div id="returnFoldLine"></div></td>
-                        </tr>
-                      </tbody>
-                    </table> 
-                    <hr />-->
-                    <h6>Totals</h6>
-                    <table  class="striped">
-                        <tbody>
-                          <tr>
-                            <td>Width</td>
-                            <td><div id="totalWidth"></div></td>
-                          </tr>
-                          <tr>
-                            <td>Height</td>
-                            <td><div id="totalHeight"></div></td>
-                          </tr>
-                          <tr>
-                            <td>Cutout</td>
-                            <td><div id="totalCutout"></div></td>
-                          </tr>
-                        </tbody>
-                      </table>
-                        
-            </li>
-        </ul>
-        
-    </div>
-    <div class="col s3">
-        <ul class="collection">
-            <li class="collection-item">
-                <h6>Holes</h6>
-                <div class="row">
-                    <div class="col s6">
-                        <input type="number" id="endOffset" value="50">
-                        <label for="endOffset">End Offset</label>
-                    </div>
-                    <div class="col s6">
-                        <input type="number" id="approxPitch" value="600">
-                        <label for="approxPitch">Approx Pitch</label>
-                    </div>
-                </div>
-            </li>
-            <li class="collection-item" id="kfactorValues">
+          </ul>
                 
-                    <h6>Totals</h6>
-                    <table  class="striped">
-                        <tbody>
-                          <tr>
-                            <td>Distance To Fill</td>
-                            <td><div id="distanceToFill"></div></td>
-                          </tr>
-                          <tr>
-                            <td>Total Holes</td>
-                            <td><div id="totalHoles"></div></td>
-                          </tr>
-                          <tr>
-                            <td>Pitch</td>
-                            <td><div id="actualPitch"></div></td>
-                          </tr>
-                        </tbody>
-                      </table>
-                        
-            </li>
-        </ul>
-        
     </div>
-    <div class="col s3">
-        <div class="card-panel light-blue lighten-5">
-            <div class="card-content">
+    <div class="col s5">
+        
+        <div class="card green lighten-5">
+            <div class="card-content white-text">
                 <div class="row">
-                    <div class="col s12">
+                    <div class="col s8">
                         <input id="jobNumber">
                         <label for="jobNumber">Job Number</label>
                     </div>
-                    <div class="col s6">
-                        <button class="waves-effect waves-light btn" onclick="download()"><i class="material-icons left">cloud_download</i>Download</button>
-                    </div>
-                    <div class="col s6">
-                        <button class="waves-effect waves-light btn" onclick="clearCanvas()"><i class="material-icons left">autorenew</i>Clear</button>
-                    </div>
-                </div>
-                <div class="row">
-                    <div id="drawingSection" class="col s12">
-                         <!--<canvas  id="canvas" class="canvas"></canvas>
-                        <svg width="300" height="200">
-                            <polygon id="polygon" points="0,0 300,0 200,200 0,200"
-                            style="fill:lime;stroke:purple;fill-rule:evenodd;" />
-                          </svg> -->
+                    <div class="col s4">
+                        <button class="waves-effect waves-light btn" onclick="calculate(true)"><i class="material-icons left">build</i>Preview</button>
                     </div>
                 </div>
             </div>
         </div>
 
-    </div>
+        <div id="previewCard" class="card light-blue lighten-5" style="display: none;">
+            <div class="card-content">
+                <p>Preview</p>
+                <svg id="svg">
+                    <polygon id="polygon"  />
+                </svg>
+                
+            </div>
+            <div class="card-action">
+                <button class="waves-effect waves-light btn" onclick="download()"><i class="material-icons left">cloud_download</i>Download</button>
+                <a class="waves-effect waves-light btn modal-trigger" href="#modal1"><i class="material-icons left">info</i>Tech Spec</a>
+            </div>
+        </div>
 
-    
+        <div id="modal1" class="modal">
+            <div class="modal-content">
+            <h4>Tech Spec</h4>
+            <p>Width: </p><div id="techSpecWidth"></div>
+            <p>Height: </p><div id="techSpecHeight"></div>
+            </div>
+        </div>
+              <!-- <div class="row">
+                Preview
+                <div id="drawingSection" class="col s12">
+                    <svg id="svg">
+                        <polygon id="polygon"  />
+                    </svg>
+                </div>
+            </div> -->
+    </div>
 </div>
 
 
+
 <!--JavaScript at end of body for optimized loading-->
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="js/materialize.min.js"></script>
-    
+<script>
+ $(document).ready(function(){
+    $('.collapsible').collapsible();
+  });
+</script>
 </body>
