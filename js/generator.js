@@ -309,6 +309,10 @@ function returnChange() {
     document.getElementById("returnBadge").textContent = 'Standard ' + getNumberElement("faceReturn").toString();
     valueChanged();
 }
+function sheetMetalChanged() {
+    document.getElementById("sheetmetalBadge").textContent = 'T: ' + getNumberElement("kFactorThickness").toString();
+    valueChanged();
+}
 function sizeChange() {
     const width = doSums(document.getElementById("faceWidth").value)
     const height = doSums(document.getElementById("faceHeight").value)
