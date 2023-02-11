@@ -49,7 +49,8 @@ function getInputs() {
         jobNumber: document.getElementById("jobNumber").value,
         upstand: getNumberElement("upstand"),
         downstand: getNumberElement("downstand"),
-        holeDiameter: getNumberElement("holeDiameter")
+        holeDiameter: getNumberElement("holeDiameter"),
+        holeOffset: getNumberElement("holeOffset")
     }
 }
 
@@ -99,7 +100,7 @@ function calculateHoles(inputs) {
 
    // Set Holes
    for (let i=0;i<totalHoles;i++) {
-       let hole = { x: Number(i*actualPitch+inputs.endOffset), y: Number(panelBlank.height - Number(15))}
+       let hole = { x: Number(i*actualPitch+inputs.endOffset), y: Number(panelBlank.height - Number(inputs.holeOffset))}
        panelBlank.holes.push(hole)
    }
 
