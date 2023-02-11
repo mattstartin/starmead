@@ -299,14 +299,26 @@ function changeStands() {
 function changeReturnType(elem) {
     document.getElementById("sameReturns").hidden = elem.checked;
     document.getElementById("customReturns").hidden = !elem.checked;
-    
-    const badge = !elem.checked ? "Standard " + getNumberElement("faceReturn") : "Custom";
-    document.getElementById("returnBadge").textContent = badge;
-
+    returnChange();
     valueChanged();
 }
 function returnChange() {
-    document.getElementById("returnBadge").textContent = 'Standard ' + getNumberElement("faceReturn").toString();
+    let faceReturn = getNumberElement("faceReturn");
+    let msg = ''
+    if (document.getElementById("returnType").checked) {
+        if(document.getElementById("customTopOn").checked) msg += 'T'+getNumberElement("topReturn") + ' '
+        if(document.getElementById("customBottomOn").checked) msg += 'B'+getNumberElement("bottomReturn") + ' '
+        if(document.getElementById("customLeftOn").checked) msg += 'L'+getNumberElement("leftReturn") + ' '
+        if(document.getElementById("customRightOn").checked) msg += 'R'+getNumberElement("rightReturn")
+    }
+    else {
+        if(document.getElementById("returnTop").checked) msg += 'T'+faceReturn + ' '
+        if(document.getElementById("returnBottom").checked) msg += 'B'+faceReturn + ' '
+        if(document.getElementById("returnLeft").checked) msg += 'L'+faceReturn + ' '
+        if(document.getElementById("returnRight").checked) msg += 'R'+faceReturn
+    }
+    if(msg==='')msg='None'
+    document.getElementById("returnBadge").textContent = msg; // 'Standard ' + getNumberElement("faceReturn").toString();
     valueChanged();
 }
 function sheetMetalChanged() {

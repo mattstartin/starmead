@@ -53,7 +53,7 @@
             <li>
               <div class="collapsible-header">
                 <i class="material-icons">assignment_return</i>Returns
-                <span id="returnBadge" class="new badge deep-orange" data-badge-caption="">Standard 50</span>
+                <span id="returnBadge" class="new badge deep-orange" data-badge-caption="">T50 B50 L50 R50</span>
               </div>
               <div class="collapsible-body">
                 Custom Returns
@@ -72,52 +72,69 @@
                     </div>
                     <div class="col s3">
                         <label>
-                            <input id="returnLeft" type="checkbox" class="filled-in" checked="checked"  onchange="valueChanged()" />
+                            <input id="returnLeft" type="checkbox" class="filled-in" checked="checked"  onchange="returnChange()" />
                             <span>Left</span>
                         </label>
                     </div>
                     <div class="col s3">
                         <label>
-                            <input id="returnRight" type="checkbox" class="filled-in" checked="checked" onchange="valueChanged()" />
+                            <input id="returnRight" type="checkbox" class="filled-in" checked="checked" onchange="returnChange()" />
                             <span>Right</span>
                         </label>
                     </div>
                     <div class="col s3">
                         <label>
-                            <input id="returnTop"  type="checkbox" class="filled-in" checked="checked" onchange="valueChanged()" />
+                            <input id="returnTop"  type="checkbox" class="filled-in" checked="checked" onchange="returnChange()" />
                             <span>Top</span>
                         </label>
                     </div>
                     <div class="col s3">
                         <label>
-                            <input id="returnBottom"  type="checkbox" class="filled-in" checked="checked" onchange="valueChanged()" />
+                            <input id="returnBottom"  type="checkbox" class="filled-in" checked="checked" onchange="returnChange()" />
                             <span>Bottom</span>
                         </label>
                     </div>
                 </div>
                 <div class="row" id="customReturns" hidden>
                     <div class="col s3">
+
                         <label>
-                            <input id="leftReturn" value="50" onchange="valueChanged()">
-                            <label for="faceWidth">Left Return</label>
+                            <input id="leftReturn" value="50" onchange="returnChange()">
+                            <label for="faceWidth">Left</label>
+                            <label>
+                                <input id="customLeftOn" type="checkbox" class="filled-in" checked="checked"  onchange="returnChange()" />
+                                <span></span>
+                            </label>
                         </label>
                     </div>
                     <div class="col s3">
                         <label>
-                            <input id="rightReturn" value="50" onchange="valueChanged()">
-                            <label for="faceWidth">Right Return</label>
+                            <input id="rightReturn" value="50" onchange="returnChange()">
+                            <label for="faceWidth">Right</label>
+                            <label>
+                                <input id="customRightOn" type="checkbox" class="filled-in" checked="checked"  onchange="returnChange()" />
+                                <span></span>
+                            </label>
                         </label>
                     </div>
                     <div class="col s3">
                         <label>
-                            <input id="topReturn" value="50" onchange="valueChanged()">
-                            <label for="faceWidth">Top Return</label>
+                            <input id="topReturn" value="50" onchange="returnChange()">
+                            <label for="faceWidth">Top</label>
+                            <label>
+                                <input id="customTopOn" type="checkbox" class="filled-in" checked="checked"  onchange="returnChange()" />
+                                <span></span>
+                            </label>
                         </label>
                     </div>
                     <div class="col s3">
                         <label>
-                            <input id="bottomReturn" value="50" onchange="valueChanged()">
-                            <label for="faceWidth">Bottom Return</label>
+                            <input id="bottomReturn" value="50" onchange="returnChange()">
+                            <label for="faceWidth">Bottom</label>
+                            <label>
+                                <input id="customBottomOn" type="checkbox" class="filled-in" checked="checked"  onchange="returnChange()" />
+                                <span></span>
+                            </label>
                         </label>
                     </div>
                 </div>
