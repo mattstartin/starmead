@@ -77,7 +77,7 @@ function kfactor(inputs) {
     panelBlank.width = Number(widthInner + (horizontalReturnCount * returnsInner) + (horizontalReturnCount * bendMaterial)).toFixed(4);
     panelBlank.height = Number(heightInner + (verticalReturnCount * returnsInner) + (verticalReturnCount * bendMaterial)).toFixed(4)
     // panelBlank.return = returnsInner;
-    debugger
+
     let cornerCutout = Number(returnsInner) + Number(bendMaterial) - Number(inputs.innerRadius);
     panelBlank.return = cornerCutout;
     
@@ -100,10 +100,10 @@ function calculateHoles(inputs) {
 
    // Set Holes
    for (let i=0;i<totalHoles;i++) {
-       let hole = { x: Number(i*actualPitch+inputs.endOffset), y: Number(panelBlank.height - Number(inputs.holeOffset))}
+       let hole = { x: Number(i*actualPitch+inputs.endOffset-inputs.kFactorThickness), y: Number(panelBlank.height - Number(inputs.holeOffset))}
        panelBlank.holes.push(hole)
    }
-
+console.log(panelBlank)
    // Display Values
    if(!this.isV2) {
     document.getElementById("distanceToFill").innerHTML = Number(distanceToFill).toFixed(4);
@@ -185,7 +185,6 @@ function download() {
 
     // Build DXF File
     let netDetails = getNetDetails(inputs);
-    debugger
     let generatedDxf = fileStart();
     panelBlank.holes.forEach(hole => generatedDxf+=addHole(hole.x+panelBlank.return, hole.y+inputs.upstand, inputs.holeDiameter/2));
     generatedDxf += addPolyLine();
