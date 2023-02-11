@@ -148,19 +148,22 @@
               </div>
             </li>
             <li>
-              <div class="collapsible-header"><i class="material-icons">radio_button_unchecked</i>Holes</div>
+              <div class="collapsible-header">
+                <i class="material-icons">radio_button_unchecked</i>Holes
+                <span id="holesBadge" class="new badge deep-orange" data-badge-caption="">4 | 50</span>
+            </div>
               <div class="collapsible-body">
                 <div class="row">
                     <div class="col s4">
-                        <input type="number" id="endOffset" value="50" onchange="valueChanged()">
+                        <input type="number" id="endOffset" value="50" onchange="holesChanged()">
                         <label for="endOffset">End Offset</label>
                     </div>
                     <div class="col s4">
-                        <input type="number" id="approxPitch" value="600" onchange="valueChanged()">
+                        <input type="number" id="approxPitch" value="600" onchange="holesChanged()">
                         <label for="approxPitch">Approx Pitch</label>
                     </div>
                     <div class="col s4">
-                        <input type="number" id="holeDiameter" value="4" onchange="valueChanged()">
+                        <input type="number" id="holeDiameter" value="4" onchange="holesChanged()">
                         <label for="holeDiameter">Diameter</label>
                     </div>
                 </div>
@@ -169,7 +172,10 @@
             <li>
               <div class="collapsible-header">
                 <i class="material-icons">square_foot</i>Sheet Metal Settings
-                <span id="sheetmetalBadge" class="new badge deep-orange" data-badge-caption="">T: 2</span>
+                <span id="sheetmetalBadge" class="new badge deep-orange" data-badge-caption="">
+                    <i class="tiny material-icons" style="font-size: 1rem;margin:0;width:1rem;line-height: 0;">width_normal</i>
+                    <span id="upstandBadgeCount">0</span>
+                </span>
             </div>
               <div class="collapsible-body">
                 <div class="row">

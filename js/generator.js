@@ -313,6 +313,10 @@ function sheetMetalChanged() {
     document.getElementById("sheetmetalBadge").textContent = 'T: ' + getNumberElement("kFactorThickness").toString();
     valueChanged();
 }
+function holesChanged() {
+    document.getElementById("holesBadge").textContent = getNumberElement("holeDiameter").toString() + " | " + getNumberElement("endOffset").toString();
+    valueChanged();
+}
 function sizeChange() {
     const width = doSums(document.getElementById("faceWidth").value)
     const height = doSums(document.getElementById("faceHeight").value)
