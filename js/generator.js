@@ -326,7 +326,7 @@ function sheetMetalChanged() {
     valueChanged();
 }
 function holesChanged() {
-    document.getElementById("holesBadge").textContent = getNumberElement("holeDiameter").toString() + " | " + getNumberElement("endOffset").toString();
+    document.getElementById("holesBadge").textContent = getNumberElement("holeDiameter").toString() + " | " + getNumberElement("holeOffset").toString();
     valueChanged();
 }
 function sizeChange() {
