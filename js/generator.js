@@ -50,7 +50,18 @@ function getInputs() {
         upstand: getNumberElement("upstand"),
         downstand: getNumberElement("downstand"),
         holeDiameter: getNumberElement("holeDiameter"),
-        holeOffset: getNumberElement("holeOffset")
+        holeOffset: getNumberElement("holeOffset"),
+        customReturns: {
+            selected: document.getElementById("returnType").checked,
+            leftOn:  document.getElementById("customLeftOn").checked,
+            left:  document.getElementById("leftReturn").checked,
+            rightOn:  document.getElementById("customRightOn").checked,
+            right:  document.getElementById("rightReturn").checked,
+            topOn:  document.getElementById("customTopOn").checked,
+            top:  document.getElementById("topReturn").checked,
+            bottomOn:  document.getElementById("customBottomOn").checked,
+            bottom:  document.getElementById("bottomReturn").checked,
+        }
     }
 }
 
@@ -118,18 +129,18 @@ function buildPolygonFromNet(inputs) {
 
     //polygon drawing goes left/down, so this is all upsidedown
     let poly = [
-        {x:netDetails.minWidth,y:netDetails.cutout},
-        {x:netDetails.minWidth,y:netDetails.cutoutTop},
-        {x:netDetails.cutout,y:netDetails.cutoutTop},
-        {x:netDetails.cutout,y:netDetails.maxHeight+0+netDetails.upstand},
-        {x:netDetails.cutoutSide,y:netDetails.maxHeight+0+netDetails.upstand},
-        {x:netDetails.cutoutSide,y:netDetails.cutoutTop},
-        {x:netDetails.maxWidth,y:netDetails.cutoutTop},
-        {x:netDetails.maxWidth,y:netDetails.cutout},
-        {x:netDetails.cutoutSide,y:netDetails.cutout},
-        {x:netDetails.cutoutSide,y:netDetails.minHeight-netDetails.downstand},
-        {x:netDetails.cutout,y:netDetails.minHeight-netDetails.downstand},
-        {x:netDetails.cutout,y:netDetails.cutout},
+        {x:netDetails.minWidth,y:netDetails.cutoutBottom},  // 1
+        {x:netDetails.minWidth,y:netDetails.cutoutTop},     // 2
+        {x:netDetails.cutoutLeft,y:netDetails.cutoutTop},   // 3   
+        {x:netDetails.cutoutLeft,y:netDetails.maxHeight+0+netDetails.upstand},  // 4
+        {x:netDetails.cutoutRight,y:netDetails.maxHeight+0+netDetails.upstand}, // 5 
+        {x:netDetails.cutoutRight,y:netDetails.cutoutTop},  // 6
+        {x:netDetails.maxWidth,y:netDetails.cutoutTop},     // 7
+        {x:netDetails.maxWidth,y:netDetails.cutoutBottom},        // 8
+        {x:netDetails.cutoutRight,y:netDetails.cutoutBottom},      // 9
+        {x:netDetails.cutoutRight,y:netDetails.minHeight-netDetails.downstand},  // 10
+        {x:netDetails.cutoutLeft,y:netDetails.minHeight-netDetails.downstand},      // 11
+        {x:netDetails.cutoutLeft,y:netDetails.cutoutBottom},          // 12
     ]
 
     // If no right return, invert right corners
@@ -163,16 +174,18 @@ function buildPolygonFromNet(inputs) {
 
 
 function getNetDetails(inputs) {
+
     return {
         minHeight: 0, 
         minWidth: 0, 
         maxHeight: Number(this.panelBlank.height), 
         maxWidth: Number(this.panelBlank.width),
-        cutout: this.panelBlank.return, 
-        cutoutTop: this.panelBlank.height-this.panelBlank.return, 
-        cutoutSide: this.panelBlank.width-this.panelBlank.return,
         upstand: inputs.upstand,
-        downstand: inputs.downstand 
+        downstand: inputs.downstand,
+        cutoutTop: this.panelBlank.height-this.panelBlank.return, 
+        cutoutLeft: this.panelBlank.return,
+        cutoutRight: this.panelBlank.width-this.panelBlank.return,
+        cutoutBottom: this.panelBlank.return
     }
 }
 
