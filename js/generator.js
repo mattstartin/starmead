@@ -18,18 +18,21 @@ function resetPanel() {
 }
 
 function calculate() {
+
     panelBlank = resetPanel();
     let inputs = getInputs();
     kfactor(inputs);
     calculateHoles(inputs);
     let poly = buildPolygonFromNet(inputs)
-    // drawCanvas(poly);
     drawPolygon(poly);
     fillTechSpec(poly);
-
 }
 
+
 function getInputs() {
+    
+
+
     return {
         kFactor: getNumberElement("kFactor"),
         kFactorThickness: getNumberElement("kFactorThickness"),
@@ -105,8 +108,9 @@ function calculateHoles(inputs) {
    for (let i=0;i<totalHoles;i++) {
        let holeOffset = inputs.returnLeft ? inputs.endOffset-inputs.kFactorThickness : inputs.endOffset
 
-       let hole = { x: Number(i*actualPitch+holeOffset), y: Number(panelBlank.height - Number(inputs.holeOffset))}
-       panelBlank.holes.push(hole)
+        let hole = { x: Number(i*actualPitch+holeOffset), y: Number(panelBlank.height - Number(inputs.holeOffset))}
+        panelBlank.holes.push(hole)
+        
    }
 
 }
@@ -213,15 +217,6 @@ function download() {
 }
 
 
-
-/* CANVAS WORK IS PARKED */
-function clearCanvas() {
-    var canvas = document.getElementById("canvas")
-    var ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-}
-
-
 function drawPolygon(poly) {
     
     const scale=doSums("450"/this.panelBlank.width)
@@ -243,53 +238,7 @@ function fillTechSpec(poly) {
     document.getElementById("techSpecHeight").innerText = panelBlank.height;
 }
 
-function drawCanvas(poly) {
-
-
-    // // TODO: Could be used to draw guidelines?
-    // // let x_divisions = [0, faceReturn-0, faceWidth-faceReturn, faceWidth-0]
-    // // let y_divisions = [0, faceReturn-0, faceHeight-faceReturn, faceHeight-0]
-
-    // var canvas = document.getElementById("canvas")
-    // const { width, height } = canvas.getBoundingClientRect();
-    
-    //     // Draw Net
-    // var ctx = canvas.getContext('2d');
-    // ctx.clearRect(0, 0, width, height);
-    // // ctx.scale(1,1);
-    // // ctx.scale(0.5,0.5)
-    
-    // //optimal size is 2500x1000, so scale in relation to that
-    // let faceWidth = document.getElementById("totalWidth").innerHTML - 0;
-    // let faceHeight = document.getElementById("totalHeight").innerHTML - 0;
-    
-    // ctx.scale(Number(faceWidth)/2500, Number(faceHeight)/1000)
-    // ctx.beginPath();
-
-    // ctx.moveTo(poly[0].x/10+20, poly[0].y/10+20);
-    
-    // for(i=1; i < poly.length; i++) {
-    //     ctx.lineTo(poly[i].x/10+20, poly[i].y/10+20)
-    // }
-    // ctx.closePath();
-
-
-    // ctx.fill();
-
-
-    
-    // ctx.fillStyle = '#f00';
-    
-    
-    // ctx.stroke();
-    // ctx.textAlign ="center";
-    // ctx.fillText("WIDTH",100,100)
-    // ctx.textAlign = "left";
-    // ctx.fillText("HEIGHT",50,50);
-
-}
-
-function changeStands() {
+function standsChanged() {
     const upstand = getNumberElement("upstand").toString();
     const downstand = getNumberElement("downstand").toString()
     document.getElementById("upstandBadgeCount").textContent = upstand;
@@ -297,7 +246,7 @@ function changeStands() {
     valueChanged();
 }
 
-function changeReturnType(elem) {
+function returnTypeChange(elem) {
     document.getElementById("sameReturns").hidden = elem.checked;
     document.getElementById("customReturns").hidden = !elem.checked;
     returnChange();

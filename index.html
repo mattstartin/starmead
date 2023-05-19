@@ -63,7 +63,7 @@
                 <div class="switch">
                     <label>
                       Off
-                      <input id="returnType" type="checkbox" onClick="changeReturnType(this)">
+                      <input id="returnType" type="checkbox" onClick="returnTypeChange(this)">
                       <span class="lever"></span>
                       On
                     </label>
@@ -160,11 +160,11 @@
               <div class="collapsible-body">
                 <div class="row">
                     <div class="col s6">
-                        <input id="upstand" type="number" value="0" onchange="changeStands()">
+                        <input id="upstand" type="number" value="0" onchange="standsChanged()">
                         <label for="upstand">Upstand</label>
                     </div>
                     <div class="col s6">
-                        <input type="number" id="downstand"  value="0" onchange="changeStands()">
+                        <input type="number" id="downstand"  value="0" onchange="standsChanged()">
                         <label for="downstand">Downstand</label>
                     </div>
                 </div>
