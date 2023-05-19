@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 panelBlank = resetPanel();
-isV2 = false;
 previewVisible = false;
 
 function resetPanel() {
@@ -18,16 +17,15 @@ function resetPanel() {
     } 
 }
 
-function calculate(isV2) {
-    this.isV2 = isV2;
+function calculate() {
     panelBlank = resetPanel();
     let inputs = getInputs();
     kfactor(inputs);
     calculateHoles(inputs);
     let poly = buildPolygonFromNet(inputs)
     // drawCanvas(poly);
-    if (this.isV2) drawPolygon(poly);
-    if (this.isV2) fillTechSpec(poly);
+    drawPolygon(poly);
+    fillTechSpec(poly);
 
 }
 
@@ -92,12 +90,6 @@ function kfactor(inputs) {
     let cornerCutout = Number(returnsInner) + Number(bendMaterial) - Number(inputs.innerRadius);
     panelBlank.return = cornerCutout;
     
-    // Update View
-    if(!this.isV2) {
-        setElementValue("totalWidth", this.panelBlank.width);
-        setElementValue("totalHeight", this.panelBlank.height);
-        setElementValue("totalCutout", (Number(returnsInner) + Number(bendMaterial) - Number(inputs.innerRadius)).toFixed(4) );
-    }
 }
 
 function calculateHoles(inputs) {
@@ -116,13 +108,7 @@ function calculateHoles(inputs) {
        let hole = { x: Number(i*actualPitch+holeOffset), y: Number(panelBlank.height - Number(inputs.holeOffset))}
        panelBlank.holes.push(hole)
    }
-console.log(panelBlank)
-   // Display Values
-   if(!this.isV2) {
-    document.getElementById("distanceToFill").innerHTML = Number(distanceToFill).toFixed(4);
-    document.getElementById("totalHoles").innerHTML = Number(totalHoles).toFixed(4);
-    document.getElementById("actualPitch").innerHTML = Number(actualPitch).toFixed(4);
-    }
+
 }
 
 function buildPolygonFromNet(inputs) {
