@@ -76,9 +76,9 @@ function setElementValue(id,value) {
 function kfactor(inputs) {
     
     // Calculate
-    let horizontalReturnCount = [returnLeft,returnRight].filter(x=>x).length;
-    let verticalReturnCount = [returnTop,returnBottom].filter(x=>x).length;
-    
+    let horizontalReturnCount = [inputs.returnLeft,inputs.returnRight].filter(x=>x).length;
+    let verticalReturnCount = [inputs.returnTop,inputs.returnBottom].filter(x=>x).length;
+console.log(horizontalReturnCount,verticalReturnCount)
     let kFactorT = inputs.kFactor * inputs.kFactorThickness;
     let bendMaterial = (inputs.angle * Math.PI / 360) * (2 * (inputs.innerRadius + kFactorT))
     let widthInner = inputs.faceWidth - horizontalReturnCount * (inputs.innerRadius+inputs.kFactorThickness)
