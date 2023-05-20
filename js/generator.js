@@ -26,6 +26,32 @@ function calculate() {
     let poly = buildPolygonFromNet(inputs)
     drawPolygon(poly);
     fillTechSpec(poly);
+
+  //testInputs('nam', inputs, T, R, B, L);
+    testInputs('TRBL', inputs, true, true, true, true);
+    testInputs('T-BL', inputs, true, false, true, true);
+    testInputs('TRB-', inputs, true, true, true, false);
+    testInputs('-RBL', inputs, false, true, true, true);
+    testInputs('TR-L', inputs, true, true, false, true);
+    testInputs('T-B-', inputs, true, false, true, false);
+    testInputs('-R-L', inputs, false, true, false, true);
+    testInputs('TR--', inputs, true, true, false, false);
+    testInputs('-RB-', inputs, false, true, true, false);
+    testInputs('T--L', inputs, true, false, false, true);
+    testInputs('--BL', inputs, false, false, true, true);
+    testInputs('---L', inputs, false, false, false, true);
+    testInputs('-R--', inputs, false, true, false, false);
+    testInputs('T---', inputs, true, false, false, false);
+    testInputs('--B-', inputs, false, false, true, false);
+    testInputs('----', inputs, false, false, false, false);
+
+}
+function testInputs(name, inputs, top, right, bottom, left) {
+    inputs.returnTop = top; inputs.returnBottom = bottom; inputs.returnLeft = left; inputs.returnRight = right; 
+    
+    let calc = kfactor(inputs);
+    console.log(name,  inputs.returnTop, inputs.returnRight, inputs.returnBottom, inputs.returnBottom, calc.width, calc.height)
+    
 }
 
 
@@ -78,7 +104,7 @@ function kfactor(inputs) {
     // Calculate
     let horizontalReturnCount = [inputs.returnLeft,inputs.returnRight].filter(x=>x).length;
     let verticalReturnCount = [inputs.returnTop,inputs.returnBottom].filter(x=>x).length;
-console.log(horizontalReturnCount,verticalReturnCount)
+
     let kFactorT = inputs.kFactor * inputs.kFactorThickness;
     let bendMaterial = (inputs.angle * Math.PI / 360) * (2 * (inputs.innerRadius + kFactorT))
     let widthInner = inputs.faceWidth - horizontalReturnCount * (inputs.innerRadius+inputs.kFactorThickness)
@@ -89,10 +115,10 @@ console.log(horizontalReturnCount,verticalReturnCount)
     panelBlank.width = Number(widthInner + (horizontalReturnCount * returnsInner) + (horizontalReturnCount * bendMaterial)).toFixed(4);
     panelBlank.height = Number(heightInner + (verticalReturnCount * returnsInner) + (verticalReturnCount * bendMaterial)).toFixed(4)
     // panelBlank.return = returnsInner;
-
+  
     let cornerCutout = Number(returnsInner) + Number(bendMaterial) - Number(inputs.innerRadius);
     panelBlank.return = cornerCutout;
-    
+    return panelBlank;
 }
 
 function calculateHoles(inputs) {
