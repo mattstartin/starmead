@@ -29,9 +29,6 @@ function calculate() {
 }
 
 function getInputs() {
-    
-
-
     return {
         kFactor: getNumberElement("kFactor"),
         kFactorThickness: getNumberElement("kFactorThickness"),
@@ -139,21 +136,17 @@ function buildPolygonFromNet(inputs) {
         {x:netDetails.cutoutLeft,y:netDetails.cutoutBottom},          // 12
     ]
 
-    // If no right return, invert right corners
-    if (!inputs.returnRight) {
-        var removeValFrom = [6,7];
-        poly = poly.filter(function(value, index) {
-             return removeValFrom.indexOf(index) == -1;
-        })
-    }
+    // The order of these is important!
+    // Because we are removing this from arrays, start with the biggest
+    // else there WILL be a weird shape produced
     if (!inputs.returnBottom) {
         var removeValFrom = [9,10];
         poly = poly.filter(function(value, index) {
-             return removeValFrom.indexOf(index) == -1;
+            return removeValFrom.indexOf(index) == -1;
         })
     }
-    if (!inputs.returnLeft) {
-        var removeValFrom = [0,1];
+    if (!inputs.returnRight) {
+        var removeValFrom = [6,7];
         poly = poly.filter(function(value, index) {
              return removeValFrom.indexOf(index) == -1;
         })
@@ -164,7 +157,12 @@ function buildPolygonFromNet(inputs) {
              return removeValFrom.indexOf(index) == -1;
         })
     }
-
+    if (!inputs.returnLeft) {
+        var removeValFrom = [0,1];
+        poly = poly.filter(function(value, index) {
+             return removeValFrom.indexOf(index) == -1;
+        })
+    }
     return poly;
 }
 
@@ -198,7 +196,6 @@ function download() {
     panelBlank.holes.forEach(hole => generatedDxf+=addHole(hole.x+panelBlank.return, hole.y+inputs.upstand, inputs.holeDiameter/2));
     generatedDxf += addPolyLine();
     let poly = buildPolygonFromNet(inputs)
-   console.log(">poly", poly) 
     poly.forEach(corner => generatedDxf+=addVertex(corner.x, corner.y))
     generatedDxf += sectionEnd();
     generatedDxf += fileEnd()
