@@ -26,34 +26,7 @@ function calculate() {
     let poly = buildPolygonFromNet(inputs)
     drawPolygon(poly);
     fillTechSpec(poly);
-
-  //testInputs('nam', inputs, T, R, B, L);
-    testInputs('TRBL', inputs, true, true, true, true);
-    testInputs('T-BL', inputs, true, false, true, true);
-    testInputs('TRB-', inputs, true, true, true, false);
-    testInputs('-RBL', inputs, false, true, true, true);
-    testInputs('TR-L', inputs, true, true, false, true);
-    testInputs('T-B-', inputs, true, false, true, false);
-    testInputs('-R-L', inputs, false, true, false, true);
-    testInputs('TR--', inputs, true, true, false, false);
-    testInputs('-RB-', inputs, false, true, true, false);
-    testInputs('T--L', inputs, true, false, false, true);
-    testInputs('--BL', inputs, false, false, true, true);
-    testInputs('---L', inputs, false, false, false, true);
-    testInputs('-R--', inputs, false, true, false, false);
-    testInputs('T---', inputs, true, false, false, false);
-    testInputs('--B-', inputs, false, false, true, false);
-    testInputs('----', inputs, false, false, false, false);
-
 }
-function testInputs(name, inputs, top, right, bottom, left) {
-    inputs.returnTop = top; inputs.returnBottom = bottom; inputs.returnLeft = left; inputs.returnRight = right; 
-    
-    let calc = kfactor(inputs);
-    console.log(name,  inputs.returnTop, inputs.returnRight, inputs.returnBottom, inputs.returnBottom, calc.width, calc.height)
-    
-}
-
 
 function getInputs() {
     
@@ -225,7 +198,7 @@ function download() {
     panelBlank.holes.forEach(hole => generatedDxf+=addHole(hole.x+panelBlank.return, hole.y+inputs.upstand, inputs.holeDiameter/2));
     generatedDxf += addPolyLine();
     let poly = buildPolygonFromNet(inputs)
-    
+   console.log(">poly", poly) 
     poly.forEach(corner => generatedDxf+=addVertex(corner.x, corner.y))
     generatedDxf += sectionEnd();
     generatedDxf += fileEnd()
