@@ -51,22 +51,19 @@ function getInputs() {
         customReturns: {
             selected: document.getElementById("returnType").checked,
             leftOn:  document.getElementById("customLeftOn").checked,
-            left:  document.getElementById("leftReturn").checked,
+            left:  document.getElementById("customReturnLeft").checked,
             rightOn:  document.getElementById("customRightOn").checked,
-            right:  document.getElementById("rightReturn").checked,
+            right:  document.getElementById("customReturnRight").checked,
             topOn:  document.getElementById("customTopOn").checked,
-            top:  document.getElementById("topReturn").checked,
+            top:  document.getElementById("customReturnTop").checked,
             bottomOn:  document.getElementById("customBottomOn").checked,
-            bottom:  document.getElementById("bottomReturn").checked,
+            bottom:  document.getElementById("customReturnBottom").checked,
         }
     }
 }
 
 function getNumberElement(id) {
     return document.getElementById(id).value - 0;
-}
-function setElementValue(id,value) {
-    document.getElementById(id).innerHTML = value;
 }
 
 function kfactor(inputs) {
@@ -140,28 +137,20 @@ function buildPolygonFromNet(inputs) {
     // Because we are removing this from arrays, start with the biggest
     // else there WILL be a weird shape produced
     if (!inputs.returnBottom) {
-        var removeValFrom = [9,10];
-        poly = poly.filter(function(value, index) {
-            return removeValFrom.indexOf(index) == -1;
-        })
+        poly[8] = {x: poly[7].x, y: poly[9].y}
+        poly[11] = {x: poly[0].x, y: poly[10].y}
     }
     if (!inputs.returnRight) {
-        var removeValFrom = [6,7];
-        poly = poly.filter(function(value, index) {
-             return removeValFrom.indexOf(index) == -1;
-        })
+        poly[5] = {x: poly[6].x, y: poly[4].y}
+        poly[8] = {x: poly[7].x, y: poly[9].y}
     }
     if (!inputs.returnTop) {
-        var removeValFrom = [3,4];
-        poly = poly.filter(function(value, index) {
-             return removeValFrom.indexOf(index) == -1;
-        })
+        poly[2] = {x: poly[1].x, y: poly[3].y}
+        poly[5] = {x: poly[6].x, y: poly[4].y}
     }
     if (!inputs.returnLeft) {
-        var removeValFrom = [0,1];
-        poly = poly.filter(function(value, index) {
-             return removeValFrom.indexOf(index) == -1;
-        })
+        poly[2] = {x: poly[1].x, y: poly[3].y}
+        poly[11] = {x: poly[0].x, y: poly[10].y}
     }
     return poly;
 }
@@ -257,10 +246,10 @@ function returnChange() {
     let faceReturn = getNumberElement("faceReturn");
     let msg = ''
     if (document.getElementById("returnType").checked) {
-        if(document.getElementById("customTopOn").checked) msg += 'T'+getNumberElement("topReturn") + ' '
-        if(document.getElementById("customBottomOn").checked) msg += 'B'+getNumberElement("bottomReturn") + ' '
-        if(document.getElementById("customLeftOn").checked) msg += 'L'+getNumberElement("leftReturn") + ' '
-        if(document.getElementById("customRightOn").checked) msg += 'R'+getNumberElement("rightReturn")
+        if(document.getElementById("customTopOn").checked) msg += 'T'+getNumberElement("customReturnTop") + ' '
+        if(document.getElementById("customBottomOn").checked) msg += 'B'+getNumberElement("customReturnBottom") + ' '
+        if(document.getElementById("customLeftOn").checked) msg += 'L'+getNumberElement("customReturnLeft") + ' '
+        if(document.getElementById("customRightOn").checked) msg += 'R'+getNumberElement("customReturnRight")
     }
     else {
         if(document.getElementById("returnTop").checked) msg += 'T'+faceReturn + ' '
