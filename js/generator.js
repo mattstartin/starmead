@@ -99,7 +99,7 @@ function calculateHoles(inputs) {
 
    // Set Holes
    for (let i=0;i<totalHoles;i++) {
-       let holeOffset = inputs.returnLeft ? inputs.endOffset-inputs.kFactorThickness : inputs.endOffset
+       let holeOffset = inputs.returnLeft ? inputs.endOffset-inputs.kFactorThickness : 0
 
        if(inputs.returnTop) {
         let hole = { x: Number(i*actualPitch+holeOffset), y: Number(panelBlank.height - Number(inputs.holeOffset))}
